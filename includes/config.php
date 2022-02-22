@@ -19,7 +19,7 @@ if($devmode){
 
     #Define DB variables
     define("DBHOST", "localhost");
-    define("DBUSER", "moment4");
-    define("DBPASS", "mom4");
-    define("DBDATABASE", "moment4");
+    define("DBUSER", "web2proj");
+    define("DBPASS", "password");
+    define("DBDATABASE", "web2proj");
 }
