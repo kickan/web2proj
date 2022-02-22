@@ -1,5 +1,5 @@
 <?php
-$site_name = "Kristina Abrahamsson";
+$sitename = "Kristina Abrahamsson";
 $divider = " | ";
 
 #Load classes
