@@ -89,4 +89,19 @@ class Website
         #Return website as assoc array
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+
+    /**
+     * Get all websites
+     * @return array
+     */
+    public function getAllWebsites() : array {
+        #Create question to db
+        $sql = "SELECT * FROM website;";
+
+        #Send question to db
+        $result = $this->db->query($sql);
+
+        #return all websites as assoc array
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
 }
