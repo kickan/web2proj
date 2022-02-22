@@ -1,6 +1,6 @@
-<?php 
-    include("includes/config.php");
-    ?>
+<?php
+include("includes/config.php");
+?>
 <!DOCTYPE html>
 <html lang="sv">
 
@@ -37,6 +37,15 @@
                 title VARCHAR(128) NOT NULL,
                 content TEXT NOT NULL,
                 created TIMESTAMP DEFAULT CURRENT_TIMESTAMP);";
+
+    #Create website table question
+    $sql .= "DROP TABLE IF EXISTS website;
+        CREATE TABLE website(
+            id INT(2) PRIMARY KEY AUTO_INCREMENT,
+            title VARCHAR(128),
+            description VARCHAR(256) NOT NULL,
+            img VARCHAR (128),
+            created TIMESTAMP DEFAULT CURRENT_TIMESTAMP);";
 
     #Echo query
     echo "<pre>$sql</pre>";
