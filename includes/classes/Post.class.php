@@ -45,7 +45,7 @@ class Post
         $content = $this->secureInput($content);
 
         #Create question to DB
-        $sql = "INSERT INTO news (title, content) VALUES
+        $sql = "INSERT INTO post (title, content) VALUES
                 ('$title', '$content');";
 
         #Send question to db, return bool
@@ -85,12 +85,12 @@ class Post
         $id = $this->secureInput($id);
 
         #Create question to db
-        $sql = "SELECT * FROM news WHERE id = $id;";
+        $sql = "SELECT * FROM post WHERE id = $id;";
 
         #Send question to db
         $result = $this->db->query($sql);
 
-        #Return single news as assoc array
+        #Return single post as assoc array
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
