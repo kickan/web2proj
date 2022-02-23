@@ -17,7 +17,7 @@ $latestPosts = $post->getPosts(3);
         <article>
             <h2><?= $p['title'] ?></h2>
             <p><?= $p['created'] ?></p>
-            <p><?= $p['description'] ?></p>
+            <p><?= $p['content'] ?></p>
             <a href="single.php?id=" <?= $p['id'] ?>>läs mer</a>
         </article><?php
                 }
