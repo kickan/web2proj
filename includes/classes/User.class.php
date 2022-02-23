@@ -158,7 +158,7 @@ class User
         $username = $this->secureInput($username);
 
         #Create question, ask for user
-        $sql = "SELECT * FROM users WHERE username = '$username';";
+        $sql = "SELECT * FROM user WHERE username = '$username';";
 
         #Send question to DB
         $result = $this->db->query($sql);
@@ -178,7 +178,7 @@ class User
     public function getAllUsers(): array
     {
         #Create question to db, ask for all users
-        $sql = "SELECT id, name, username FROM users;";
+        $sql = "SELECT id, name, username FROM user;";
 
         #Send question to db
         $allUsers = $this->db->query($sql);
