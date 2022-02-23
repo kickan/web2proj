@@ -1,5 +1,5 @@
 <?php
-$pagename = "Startsida";
+$pagename = "Admin";
 include("includes/header.php");
 
 #Create new user obj
