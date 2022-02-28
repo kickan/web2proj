@@ -16,13 +16,16 @@ include("includes/config.php");
 </head>
 
 <body>
-    <header>
-        <nav class="glob-nav">
-            <ul class="glob-nav__lst">
-            <li><a href="index.php">Startsida</a></li>
-            <li><a href="portfolio.php">Portfolio</a></li>
-            <li><a href="skills.php">Skills</a></li>
-            <li><a href="blog.php">Blogg</a></li>
-            </ul>
-        </nav>
-    </header>
+    <div class="header-wrapper">
+        <header>
+            <p>Kristina Abrahamsson</p>
+            <nav class="glob-nav">
+                <ul class="nav-lst glob-nav__lst">
+                    <li><a href="index.php">Startsida</a></li>
+                    <li><a href="portfolio.php">Portfolio</a></li>
+                    <li><a href="skills.php">Skills</a></li>
+                    <li><a href="blog.php">Blogg</a></li>
+                </ul>
+            </nav>
+        </header>
+    </div>
