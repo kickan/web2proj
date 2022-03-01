@@ -37,7 +37,7 @@ h4 {
     font-size: 1.8rem;
 }
 
-p, a {
+p, a, label, input, textarea, li {
     font-size: 1.8rem;
     font-family: 'Open Sans', sans-serif;
 }
@@ -64,7 +64,6 @@ body {
 header {
     grid-area: header;
     width: 100%;
-    /*border: 1px solid #6BA44B;*/
     padding: 2rem;
     margin-bottom: auto;
     display: flex;
@@ -72,9 +71,11 @@ header {
     align-items: center;
     background-color: white;
 }
-.header-wrapper{
+
+.header-wrapper {
     padding: 1px;
-    background: linear-gradient(to right, rgba(107, 164, 75,0), #6BA44B);
+    background: linear-gradient(to right, rgba(107, 164, 75, 0), #6BA44B);
+    height: 66.8px;
 }
 
 main {
@@ -146,6 +147,25 @@ footer {
     text-align: center;
 }
 
-.intro__text{
+.intro__text {
     font-size: 3.8rem;
+}
+
+.card {
+    padding: 2rem;
+    width: 30%;
+    max-width: 500px;
+    height: 500px;
+    margin: auto auto;
+}
+
+.card__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.card--green {
+    border: 1px solid #6BA44B;
+
 }
