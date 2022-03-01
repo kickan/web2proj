@@ -1,9 +1,12 @@
 
+//Function to run when page is loaded
 function init() {
     runFunctions();
 }
+
 window.addEventListener("load", init);
 
+//Run different functions depending on which page is loaded
 function runFunctions() {
     let page = document.body.id;
     switch (page) {
@@ -13,11 +16,10 @@ function runFunctions() {
         case "adminuser":
             getUsers();
             const addUserBtn = document.getElementById("addUserBtn");
-            addUserBtn.addEventListener("click", addUser(event));
+            addUserBtn.addEventListener("click", addUser);
             break;
     }
 }
-
 
 //Fetch latest posts from post API
 function getLatestPosts() {
@@ -54,58 +56,129 @@ function writePosts(posts) {
         link.href = "single.php?id=" + post.id;
         link.innerHTML = "Läs mer";
 
+        //Append elements to article
         cont.appendChild(h2);
         cont.appendChild(time);
         cont.appendChild(text);
         cont.appendChild(link);
 
+        //Append article to container
         contEl.appendChild(cont);
     })
 }
 
-function addUser(e){
-    e.preventDefault();
+//Add user from form to db using API
+function addUser(event) {
+    event.preventDefault(); //Prevent page from loading
     let formData = new FormData();
 
+    //Get form elements
     const nameInput = document.getElementById("name");
     const usernameInput = document.getElementById("username");
     const pass1Input = document.getElementById("password1");
     const pass2Input = document.getElementById("password2");
 
-    let lst = [nameInput.value, usernameInput.value, pass1Input.value, pass2Input.value];
-    console.log(lst);
+    //Append form values
     formData.append("name", nameInput.value);
     formData.append("username", usernameInput.value);
     formData.append("password1", pass1Input.value);
-    formData.append("password2",pass2Input.value);
+    formData.append("password2", pass2Input.value);
 
+    //POST data to API
     fetch("API/user.php", {
         method: "POST",
         body: formData
     })
-    .then(response => response.json())
-    .then(data => console.log(data));
+        .then(response => response.json())
+        .then(data => checkAndPrintResponse(data));
+
+    //Empty password fields
+    pass1Input.value = "";
+    pass2Input.value = "";
 
     getUsers();
 }
 
+//Get all users from DB using API
 function getUsers() {
     fetch("API/user.php")
         .then(response => response.json())
         .then(data => writeUsers(data));
 }
 
+//List all users
 function writeUsers(users) {
-    const ulEl = document.getElementById("user-lst");
+    const tableEl = document.getElementById("user-table");
 
-    //Clear list
-    ulEl.innerHTML = "";
+    //Remove all child nodes exept headings
+    while (tableEl.childNodes.length > 2) {
+        tableEl.removeChild(tableEl.lastChild);
+    }
 
+    //List users
     users.forEach(user => {
-        let liEl = document.createElement("li");
-        let liText = document.createTextNode(user.name);
+        let td1 = document.createElement("td");
+        let td2 = document.createElement("td");
+        let td3 = document.createElement("td");
 
-        liEl.appendChild(liText);
-        ulEl.appendChild(liEl);
+        let created = fixDate(user.created);
+
+        td1.innerHTML = user.name;
+        td2.innerHTML = user.username;
+        td3.innerHTML = created;
+
+        let trEl = document.createElement("tr");
+
+
+        //Append elements
+        trEl.appendChild(td1);
+        trEl.appendChild(td2);
+        trEl.appendChild(td3);
+
+        tableEl.appendChild(trEl);
     })
+}
+
+//Fix database date to another format
+function fixDate(stringDate) {
+    const d = new Date(stringDate);
+    let returnDate = d.getDate() + "/" + d.getMonth() + "-" + d.getFullYear() + " kl. " + d.getHours() + ":" + d.getMinutes();
+
+    return returnDate;
+}
+
+
+function checkAndPrintResponse(data) {
+    //Get reference to messagebox
+    let box = document.getElementById("message-box");
+
+    //Get reference to form elements
+    const nameInput = document.getElementById("name");
+    const usernameInput = document.getElementById("username");
+
+    //Empty box content
+    box.innerHTML = "";
+
+    let errorno = parseInt(data.error);
+
+    //Check response
+    if (errorno == 0) {
+        //Print message
+        let p = document.createElement("p");
+        p.innerHTML = data.message;
+        box.appendChild(p);
+        //If user added, empty form
+        nameInput.value = "";
+        usernameInput.value = "";
+    } else {
+        //Split messages into list if several error messages
+        let m = data.message;
+        let messages = m.split(". ");
+        for (let i = 0; i < errorno; i++) {
+            //Print error messages
+            let p = document.createElement("p");
+            p.innerHTML = messages[i];
+            box.appendChild(p);
+        }
+    }
 }
