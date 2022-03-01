@@ -17,12 +17,20 @@ if (!$user->isLoggedIn()) {
     <?php include("includes/adminnav.php") ?>
     <section>
         <h2>Användare</h2>
-        <ul id="user-lst">
-        </ul>
+        <table id="user-table">
+            <tr>
+                <th>Namn</th>
+                <th>Användarnamn</th>
+                <th>Skapad</th>
+            </tr>
+        </table>
     </section>
     <section>
         <h2>Skapa ny användare</h2>
         <form>
+            <div id="message-box">
+                
+            </div>
             <label for="name">Namn: </label><br>
             <input type="text" id="name" name="name" required><br>
             <label for="username">Användarnamn: </label><br>
@@ -30,7 +38,7 @@ if (!$user->isLoggedIn()) {
             <label for="password1">Lösenord: </label><br>
             <input type="password" id="password1" name="password1" required><br>
             <label for="password2">Upprepa lösenordet: </label><br>
-            <input type="password" id="password2" name="password2" required ><br>
+            <input type="password" id="password2" name="password2" required><br>
             <input type="submit" value="Lägg till användare" id="addUserBtn">
         </form>
     </section>
