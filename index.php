@@ -1,12 +1,8 @@
 <?php
 $pagename = "Startsida";
+$bodyId="index";
 include("includes/header.php");
 
-#create new post obj
-$post = new Post;
-
-#Get 3 latest posts
-$latestPosts = $post->getPosts(3);
 ?>
 <main>
     <section class="full intro__sec">
@@ -17,19 +13,7 @@ $latestPosts = $post->getPosts(3);
             <p class="intro__text">creative designer</p>
         </div>
     </section>
-    <section class="full">
-        <?php
-        #list latest posts
-        foreach ($latestPosts as $p) {
-        ?>
-            <article>
-                <h2><?= $p['title'] ?></h2>
-                <p><?= $p['created'] ?></p>
-                <p><?= $p['content'] ?></p>
-                <a href="single.php?id=" <?= $p['id'] ?>>läs mer</a>
-            </article><?php
-                    }
-                        ?>
+    <section class="full card__container" id="post-container">
     </section>
 </main>
 <?php
