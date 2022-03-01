@@ -15,7 +15,7 @@ include("includes/config.php");
     <title><?= $sitename . $divider . $pagename ?></title>
 </head>
 
-<body>
+<body id="<?= $bodyId ?>">
     <div class="header-wrapper">
         <header>
             <p>Kristina Abrahamsson</p>
