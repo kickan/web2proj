@@ -178,7 +178,7 @@ class User
     public function getAllUsers(): array
     {
         #Create question to db, ask for all users
-        $sql = "SELECT id, name, username FROM user;";
+        $sql = "SELECT id, name, username, created FROM user;";
 
         #Send question to db
         $allUsers = $this->db->query($sql);
