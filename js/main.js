@@ -11,25 +11,32 @@ function runFunctions() {
     let page = document.body.id;
     switch (page) {
         case "index":
-            getLatestPosts();
+            getPosts(3);
             break;
         case "adminuser":
             getUsers();
             const addUserBtn = document.getElementById("addUserBtn");
             addUserBtn.addEventListener("click", addUser);
             break;
+        case "adminblog":
+            const addPostBtn = document.getElementById("addPostBtn");
+            addPostBtn.addEventListener("click", addPost);
+            getPosts(0);
+            break;
     }
 }
 
 //Fetch latest posts from post API
-function getLatestPosts() {
-    fetch("API/post.php")
+function getPosts(number) {
+    let url = "API/post.php?number=" + number;
+
+    fetch(url)
         .then(response => response.json())
-        .then(data => writePosts(data));
+        .then(data => printPosts(data));
 }
 
-//Write posts to screen
-function writePosts(posts) {
+//Print posts to screen
+function printPosts(posts) {
     const contEl = document.getElementById("post-container");
 
     contEl.innerHTML = ""; //Empty element
@@ -67,6 +74,32 @@ function writePosts(posts) {
     })
 }
 
+//Add post to db with API
+function addPost(event) {
+    event.preventDefault();
+    let formData = new FormData();
+
+    //Get form elements
+    const titleInput = document.getElementById("title");
+    const contentInput = document.getElementById("content");
+
+    //Append form values
+    formData.append("title", titleInput.value);
+    formData.append("content", contentInput.value);
+
+
+
+    //POST data to API
+    fetch("API/post.php", {
+        method: "POST",
+        body: formData
+    })
+        .then(response => response.json())
+        .then(data => checkAndPrintResponse(data, ["title", "content"]));
+    //Update list of posts
+    getPosts(0);
+}
+
 //Add user from form to db using API
 function addUser(event) {
     event.preventDefault(); //Prevent page from loading
@@ -90,7 +123,7 @@ function addUser(event) {
         body: formData
     })
         .then(response => response.json())
-        .then(data => checkAndPrintResponse(data));
+        .then(data => checkAndPrintResponse(data, ["name", "username"]));
 
     //Empty password fields
     pass1Input.value = "";
@@ -103,11 +136,11 @@ function addUser(event) {
 function getUsers() {
     fetch("API/user.php")
         .then(response => response.json())
-        .then(data => writeUsers(data));
+        .then(data => printUsers(data));
 }
 
 //List all users
-function writeUsers(users) {
+function printUsers(users) {
     const tableEl = document.getElementById("user-table");
 
     //Remove all child nodes exept headings
@@ -148,13 +181,9 @@ function fixDate(stringDate) {
 }
 
 
-function checkAndPrintResponse(data) {
+function checkAndPrintResponse(data, lst) {
     //Get reference to messagebox
     let box = document.getElementById("message-box");
-
-    //Get reference to form elements
-    const nameInput = document.getElementById("name");
-    const usernameInput = document.getElementById("username");
 
     //Empty box content
     box.innerHTML = "";
@@ -168,8 +197,11 @@ function checkAndPrintResponse(data) {
         p.innerHTML = data.message;
         box.appendChild(p);
         //If user added, empty form
-        nameInput.value = "";
-        usernameInput.value = "";
+        for (let i = 0; i < lst.length; i++) {
+            const inputField = document.getElementById(lst[i]);
+            inputField.value = "";
+        }
+
     } else {
         //Split messages into list if several error messages
         let m = data.message;
