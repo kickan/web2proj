@@ -60,11 +60,11 @@ if(isset($_POST['username'])) {
     #Add user if all ok
     if ($nameOk && $userOk && $passOk) {
         if ($user->createUser($name, $username, $pass1)) {
-            $result = array('error'=>0, 'message'=>'Användaren har lagts till!');
+            $mess = "Användaren har lagts till!";
         }
-    }else{
-        $result = array('error'=> $error, 'message'=> $mess); 
     }
+    
+    $result = array('error'=> $error, 'message'=> $mess); 
 } else {
     #Get all users
     $result = $user->getAllUsers();
