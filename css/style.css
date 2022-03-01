@@ -37,7 +37,7 @@ h4 {
     font-size: 1.8rem;
 }
 
-p, a, label, input, textarea, li {
+p, a, label, input, textarea, li, th, td {
     font-size: 1.8rem;
     font-family: 'Open Sans', sans-serif;
 }
