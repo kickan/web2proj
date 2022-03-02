@@ -36,6 +36,8 @@ include("includes/config.php");
                 id INT(11) PRIMARY KEY AUTO_INCREMENT,
                 title VARCHAR(128) NOT NULL,
                 content TEXT NOT NULL,
+                img VARCHAR(128),
+                imgtext VARCHAR (256),
                 created TIMESTAMP DEFAULT CURRENT_TIMESTAMP);";
 
     #Create website table question
