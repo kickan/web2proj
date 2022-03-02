@@ -1,5 +1,9 @@
 <?php
-include("includes/config.php");
+include_once("includes/config.php");
+
+$user = new User;
+
+
 ?>
 <!DOCTYPE html>
 <html lang="sv">
@@ -18,13 +22,20 @@ include("includes/config.php");
 <body id="<?= $bodyId ?>">
     <div class="header-wrapper">
         <header>
-            <p>Kristina Abrahamsson</p>
+            <p> <a href="index.php">Kristina Abrahamsson</a></p>
+
             <nav class="glob-nav">
                 <ul class="nav-lst glob-nav__lst">
-                    <li><a href="index.php">Startsida</a></li>
                     <li><a href="portfolio.php">Portfolio</a></li>
                     <li><a href="skills.php">Skills</a></li>
                     <li><a href="blog.php">Blogg</a></li>
+                    <?php
+                    if ($user->isLoggedIn()) {
+                    ?>
+                        <li><a href="admin.php">Admin</a></li>
+                    <?php
+                    }
+                    ?>
                 </ul>
             </nav>
         </header>
