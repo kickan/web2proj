@@ -36,17 +36,21 @@ class Post
      * Create new Post
      * @param string $title
      * @param string $content
+     * @param string $img
+     * @param string $imgText
      * @return bool
      */
-    public function createPost(string $title, string $content): bool
+    public function createPost(string $title, string $content, string $img, string $imgText): bool
     {
         #secure input
         $title = $this->secureInput($title);
         $content = $this->secureInput($content);
+        $img = $this->secureInput($img);
+        $imgText = $this->secureInput($imgText);
 
         #Create question to DB
-        $sql = "INSERT INTO post (title, content) VALUES
-                ('$title', '$content');";
+        $sql = "INSERT INTO post (title, content, img, imgtext) VALUES
+                ('$title', '$content', '$img', '$imgText');";
 
         #Send question to db, return bool
         return $this->db->query($sql);
