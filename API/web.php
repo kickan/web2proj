@@ -4,8 +4,8 @@ include_once("../includes/config.php");
 #Headers
 header("content-type: application/json; utf-8");
 
-#create new post obj
-$postapi = new Post;
+#Create new website obj
+$website = new Website;
 
 $error = 0;
 $mess = "";
@@ -50,35 +50,34 @@ if (isset($_FILES['file'])) {
     $imgName = "";
 } // Slut på isset(FILE)
 
-#Check for added post
+#Check for added webbsite
 if (isset($_POST['title'])) {
     $title = $_POST['title'];
-    $content = $_POST['content'];
-    $imgText = $_POST['imgtext'];
-
+    $desc = $_POST['content'];
+    
     #Check for empty strings
-    if ($title == "" || $content == "") {
-        #Update error and message
+    if ($title == "" || $desc == "") {
+        #Save posted content in form
+        $f_title = $title;
+        $f_content = $desc;
+
+        #Update message
         $error += 1;
-        $mess .= "Blogginlägget måste ha en titel och beskrivning. ";
+        $mess .= "Webbplatsen måste ha en titel och beskrivning. ";
     } else {
-        #check for img error
-        if ($imgOk) {
-            #Add post
-            if ($postapi->createPost($title, $content, $imgName, $imgText)) {
-                $mess .= "Blogginlägget har lagts till!";
-            } else {
-                $error += 1;
-                $mess .= "Något gick fel när blogginlägget skulle läggas till. ";
-            }
+        #Add website
+        if ($website->addWebsite($title, $desc, $imgName)) {
+            $mess .= "Webbplatsen har lagts till!";
+        } else {
+            $error += 1;
+            $mess .= "Något gick fel när webbplatsen skulle läggas till";
         }
     }
-    #Add error and message to response
     $response = array("error" => $error, "message" => $mess);
-} else {
-    $number = $_GET["number"];
-    $response = $postapi->getPosts($number);
+}else{
+    #list websites
+    $response = $website->getAllWebsites();
 }
 
-
+#Return response
 echo json_encode($response);
