@@ -23,6 +23,11 @@ function runFunctions() {
             addPostBtn.addEventListener("click", addPost);
             getPosts(0);
             break;
+        case "admin":
+            let webBtn = document.getElementById("webBtn");
+            webBtn.addEventListener("click", addWebsite);
+            getAllWebsites();
+            break;
     }
 }
 
@@ -55,6 +60,10 @@ function printPosts(posts) {
         let timeText = document.createTextNode(post.created);
         time.appendChild(timeText);
 
+        let img = document.createElement("img");
+        img.src = "img/" + post.img;
+        img.alt = post.imgtext;
+
         let text = document.createElement("p");
         let textText = document.createTextNode(post.content);
         text.appendChild(textText);
@@ -66,6 +75,7 @@ function printPosts(posts) {
         //Append elements to article
         cont.appendChild(h2);
         cont.appendChild(time);
+        cont.appendChild(img);
         cont.appendChild(text);
         cont.appendChild(link);
 
@@ -81,13 +91,15 @@ function addPost(event) {
 
     //Get form elements
     const titleInput = document.getElementById("title");
+    const imgInput = document.getElementById("file");
+    const imgText = document.getElementById("imgtext");
     const contentInput = document.getElementById("content");
 
     //Append form values
     formData.append("title", titleInput.value);
     formData.append("content", contentInput.value);
-
-
+    formData.append("file", imgInput.files[0]);
+    formData.append("imgtext", imgText.value);
 
     //POST data to API
     fetch("API/post.php", {
@@ -95,7 +107,8 @@ function addPost(event) {
         body: formData
     })
         .then(response => response.json())
-        .then(data => checkAndPrintResponse(data, ["title", "content"]));
+        .then(data => checkAndPrintResponse(data, ["title", "content", "file", "imgtext"]));
+
     //Update list of posts
     getPosts(0);
 }
@@ -117,7 +130,7 @@ function addUser(event) {
     formData.append("password1", pass1Input.value);
     formData.append("password2", pass2Input.value);
 
-    //POST data to API
+    //POST users to API
     fetch("API/user.php", {
         method: "POST",
         body: formData
@@ -213,4 +226,50 @@ function checkAndPrintResponse(data, lst) {
             box.appendChild(p);
         }
     }
+}
+
+function addWebsite(event){
+    event.preventDefault(); //Prevent page from loading
+    let formData = new FormData();
+
+    //Get form elements
+    const titleInput = document.getElementById("title");
+    const imgInput = document.getElementById("file");
+    const contentInput = document.getElementById("content");
+
+    //Append form values
+    formData.append("title", titleInput.value);
+    formData.append("content", contentInput.value);
+    formData.append("file", imgInput.files[0]);
+
+    //POST users to API
+    fetch("API/web.php", {
+        method: "POST",
+        body: formData
+    })
+        .then(response => response.json())
+        .then(data => checkAndPrintResponse(data, ["title", "file", "content"]));
+
+    getAllWebsites();
+}
+
+//Fetch latest websites from web API
+function getAllWebsites() {
+    fetch("API/web.php")
+        .then(response => response.json())
+        .then(data => printWebs(data));
+}
+
+//Print websites to portfolio
+function printWebs(web){
+    let ulEl = document.getElementById("web-lst");
+
+    ulEl.innerHTML = "";
+    web.forEach(web => {
+        let liEl = document.createElement("li");
+        let textNode = document.createTextNode(web.title);
+        liEl.appendChild(textNode);
+
+        ulEl.appendChild(liEl);
+    })
 }
