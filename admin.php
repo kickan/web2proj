@@ -19,17 +19,17 @@ if (!$user->isLoggedIn()) {
     <h1>Admin</h1>
     <?php include("includes/adminnav.php") ?>
 
-    <section>
+    <section class="center-box">
         <h2>Portfolio</h2>
-        <form action="admin.php" method="POST" enctype="multipart/form-data">
+        <form action="admin.php" method="POST" enctype="multipart/form-data" class="form form--green">
             <label for="title">Titel: </label><br>
             <input type="text" id="title" name="title"><br>
             <input type="hidden" name="MAX_FILE_SIZE" value="200000" /> <!-- 200K max storlek -->
             <label for="file">Bild:</label><br>
             <input type="file" name="file" id="file" /><br>
             <label for="content">Beskrivning: </label><br>
-            <textarea name="content" id="content" cols="30" rows="10"></textarea><br>
-            <input type="submit" id="webBtn" value="Lägg till webbsida">
+            <textarea name="content" id="content" cols="30" rows="10" style="resize: vertical"></textarea><br>
+            <input type="submit" id="webBtn" value="Lägg till webbsida" class="btn btn--green">
             <div id="message-box"></div>
         </form>
     </section>

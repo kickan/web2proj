@@ -14,12 +14,12 @@ if (!$user->isLoggedIn()) {
 
 ?>
 <main>
-    <h1>Admin</h1>
+    <h1 class="center-heading">Admin</h1>
     <?php include("includes/adminnav.php") ?>
 
-    <section>
+    <section class="center-box">
         <h2>Skapa nytt blogginlägg</h2>
-        <form action="adminblog.php" method="POST" enctype="multipart/form-data">
+        <form action="adminblog.php" method="POST" enctype="multipart/form-data" class="form form--green">
             <label for="title">Titel: </label><br>
             <input type="text" id="title" name="title"><br>
             <input type="hidden" name="MAX_FILE_SIZE" value="200000" /> <!-- 200K max storlek -->
@@ -28,14 +28,15 @@ if (!$user->isLoggedIn()) {
             <label for="imgtext">Bildtext: </label><br>
             <input type="text" id="imgtext" name="imgtext"><br>
             <label for="content">Innehåll: </label><br>
-            <textarea name="content" id="content" cols="30" rows="10"></textarea><br>
-            <input type="submit" id="addPostBtn" value="Lägg till blogginlägg">
+            <textarea name="content" id="content" cols="30" rows="10" style="resize: vertical"></textarea><br>
             <p id="message-box"></p>
+            <input type="submit" class="btn btn--green" id="addPostBtn" value="Lägg till blogginlägg">
+
         </form>
     </section>
 
     <section>
-        <h2>Alla publicerade blogginlägg</h2>
+        <h2 class="center-heading">Alla publicerade blogginlägg</h2>
         <div id="post-container">
 
         </div>

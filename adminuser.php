@@ -13,34 +13,38 @@ if (!$user->isLoggedIn()) {
 
 ?>
 <main>
-    <h1>Admin</h1>
+    <h1 class="center-heading">Admin</h1>
     <?php include("includes/adminnav.php") ?>
-    <section>
-        <h2>Användare</h2>
-        <table id="user-table">
-            <tr>
-                <th>Namn</th>
-                <th>Användarnamn</th>
-                <th>Skapad</th>
-            </tr>
-        </table>
-    </section>
-    <section>
-        <h2>Skapa ny användare</h2>
-        <form>
-            <div id="message-box">
-                
-            </div>
-            <label for="name">Namn: </label><br>
-            <input type="text" id="name" name="name" required><br>
-            <label for="username">Användarnamn: </label><br>
-            <input type="text" id="username" name="username" required><br>
-            <label for="password1">Lösenord: </label><br>
-            <input type="password" id="password1" name="password1" required><br>
-            <label for="password2">Upprepa lösenordet: </label><br>
-            <input type="password" id="password2" name="password2" required><br>
-            <input type="submit" value="Lägg till användare" id="addUserBtn">
-        </form>
+    <section class="center-box">
+        <section>
+            <h2>Skapa ny användare</h2>
+            <form class="form form--green">
+                <div id="message-box">
+
+                </div>
+                <label for="name">Namn: </label><br>
+                <input type="text" id="name" name="name" required><br>
+                <label for="username">Användarnamn: </label><br>
+                <input type="text" id="username" name="username" required><br>
+                <label for="password1">Lösenord: </label><br>
+                <input type="password" id="password1" name="password1" required><br>
+                <label for="password2">Upprepa lösenordet: </label><br>
+                <input type="password" id="password2" name="password2" required><br>
+                <input type="submit" value="Lägg till användare" id="addUserBtn" class="btn btn--green">
+            </form>
+        </section>
+        <section>
+            <h2>Användare</h2>
+            <table id="user-table">
+                <tr>
+                    <th>Namn</th>
+                    <th>Användarnamn</th>
+                    <th>Skapad</th>
+                </tr>
+            </table>
+        </section>
+
+
     </section>
 </main>
 <?php
