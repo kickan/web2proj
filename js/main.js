@@ -1,3 +1,5 @@
+let admin = false;
+
 
 //Function to run when page is loaded
 function init() {
@@ -12,110 +14,195 @@ function runFunctions() {
     switch (page) {
         case "index":
             imgFunc();
-            getPosts(3);
+            getPosts(3, "big");
             break;
         case "adminuser":
+            admin = true;
             getUsers();
             const addUserBtn = document.getElementById("addUserBtn");
             addUserBtn.addEventListener("click", addUser);
             break;
         case "adminblog":
+            admin = true;
             const addPostBtn = document.getElementById("addPostBtn");
             addPostBtn.addEventListener("click", addPost);
-            getPosts(0);
+            getPosts(0, "small");
             break;
         case "admin":
+            admin = true;
             let webBtn = document.getElementById("webBtn");
             webBtn.addEventListener("click", addWebsite);
             getAllWebsites();
+
             break;
     }
 }
 
 //Img animation index page
-function imgFunc(){
+function imgFunc() {
     let img1 = document.getElementById("img1");
     let img2 = document.getElementById("img2");
     let img3 = document.getElementById("img3");
 
-    document.addEventListener("scroll", function(){
-        let value=window.scrollY;
-        if (value < 76){
-            img1.style.opacity="1";
+    document.addEventListener("scroll", function () {
+        let value = window.scrollY;
+        if (value < 76) {
+            img1.style.opacity = "1";
             img2.style.opacity = "0";
-            img3.style.opacity="0";
-            
+            img3.style.opacity = "0";
+
         }
-        else if (value <176 && value > 76){
-            img1.style.opacity ="0";
+        else if (value < 176 && value > 76) {
+            img1.style.opacity = "0";
             img2.style.opacity = "1";
-            img3.style.opacity="0";
+            img3.style.opacity = "0";
         }
-        else{
-            img1.style.opacity ="0";
+        else {
+            img1.style.opacity = "0";
             img2.style.opacity = "0";
-            img3.style.opacity="1";
-    
+            img3.style.opacity = "1";
+
             //window.setInterval(knitMove, timerStep);
-    
+
         }
     })
 }
 
 //Fetch latest posts from post API
-function getPosts(number) {
+function getPosts(number, type) {
     let url = "API/post.php?number=" + number;
 
     fetch(url)
         .then(response => response.json())
-        .then(data => printPosts(data));
+        .then(data => printPosts(data, type));
 }
 
-//Print posts to screen
-function printPosts(posts) {
+//Print posts to on public pages
+function printPosts(posts, type) {
     const contEl = document.getElementById("post-container");
 
     contEl.innerHTML = ""; //Empty element
 
-    posts.forEach(post => {
-        //Create elements and add data from post
-        let cont = document.createElement("article");
-        cont.classList.add("card--green");
-        cont.classList.add("card");
+    if (type == "big") {
+        posts.forEach(post => {
+            //Create elements and add data from post
+            let cont = document.createElement("article");
+            cont.id = post.id;
+            cont.classList.add("card--green");
+            cont.classList.add("card");
 
-        let h2 = document.createElement("h2");
-        let h2text = document.createTextNode(post.title);
-        h2.appendChild(h2text);
+            let h2 = document.createElement("h2");
+            let h2text = document.createTextNode(post.title);
+            h2.appendChild(h2text);
 
-        let time = document.createElement("p");
-        let timeText = document.createTextNode(post.created);
-        time.appendChild(timeText);
+            let time = document.createElement("p");
+            let timeText = document.createTextNode(post.created);
+            time.appendChild(timeText);
 
-        let img = document.createElement("img");
-        img.src = "img/" + post.img;
-        img.alt = post.imgtext;
+            let img = document.createElement("img");
+            img.src = "img/" + post.img;
+            img.alt = post.imgtext;
 
-        let text = document.createElement("p");
-        let content = post.content.split(" ", 50);
-        content = content.join(" ") + "...";
-        let textText = document.createTextNode(content);
-        text.appendChild(textText);
+            let text = document.createElement("p");
+            let content = post.content.split(" ", 50);
+            content = content.join(" ") + "...";
+            let textText = document.createTextNode(content);
+            text.appendChild(textText);
 
-        let link = document.createElement("a");
-        link.href = "single.php?id=" + post.id;
-        link.innerHTML = "Läs mer";
+            let link = document.createElement("a");
+            link.href = "single.php?id=" + post.id;
+            link.innerHTML = "Läs mer";
 
-        //Append elements to article
-        cont.appendChild(h2);
-        cont.appendChild(time);
-        cont.appendChild(img);
-        cont.appendChild(text);
-        cont.appendChild(link);
+            //Append elements to article
+            cont.appendChild(h2);
+            cont.appendChild(time);
+            cont.appendChild(img);
+            cont.appendChild(text);
+            cont.appendChild(link);
 
-        //Append article to container
-        contEl.appendChild(cont);
-    })
+            //Append article to container
+            contEl.appendChild(cont);
+        })
+    } else if (type == "small") {
+        posts.forEach(post => {
+            //Create elements and add data from post
+            let cont = document.createElement("article");
+            cont.id = post.id;
+            cont.classList.add("card--green");
+            cont.classList.add("card--small");
+            cont.addEventListener("click", expandCard);
+
+            let div = document.createElement("div");
+            div.classList.add("card--heading");
+
+
+            let h2 = document.createElement("h3");
+            let h2text = document.createTextNode(post.title);
+            h2.appendChild(h2text);
+            div.appendChild(h2);
+            if (admin) {
+                let btnDiv = document.createElement("div");
+                btnDiv.classList.add("btnDiv");
+
+                //create edit and delete btn
+                let delBtn = document.createElement("button");
+                delBtn.classList.add("btn");
+                delBtn.classList.add("btn--green");
+                delBtn.innerHTML="Radera";
+                delBtn.addEventListener("click", deletePost);
+
+                let editBtn = document.createElement("button");
+                editBtn.classList.add("btn");
+                editBtn.classList.add("btn--white");
+                editBtn.innerHTML = "Redigera";
+
+                btnDiv.appendChild(editBtn);
+                btnDiv.appendChild(delBtn);
+
+                div.appendChild(btnDiv);
+            }
+            cont.appendChild(div);
+
+            let time = document.createElement("p");
+            let timeText = document.createTextNode(post.created);
+            time.appendChild(timeText);
+            cont.appendChild(time);
+
+            let img = document.createElement("img");
+            img.classList.add("flexi-cont");
+            img.src = "img/" + post.img;
+            img.alt = post.imgtext;
+            cont.appendChild(img);
+
+            let text = document.createElement("p");
+            text.classList.add("flexi-cont");
+            let content = post.content.split(" ", 50);
+            content = content.join(" ") + "...";
+            let textText = document.createTextNode(content);
+            text.appendChild(textText);
+            cont.appendChild(text);
+
+            let link = document.createElement("a");
+            link.classList.add("flexi-cont");
+            link.href = "single.php?id=" + post.id;
+            link.innerHTML = "Läs mer";
+            cont.appendChild(link);
+
+            //Append article to container
+            contEl.appendChild(cont);
+        })
+    }
+
 }
+
+//Delete post from DB via API
+function editDelPost(url){
+    fetch(url)
+    .then(response => response.json())
+    .then(data =>)
+
+}
+
 
 //Add post to db with API
 function addPost(event) {
@@ -143,7 +230,7 @@ function addPost(event) {
         .then(data => checkAndPrintResponse(data, ["title", "content", "file", "imgtext"]));
 
     //Update list of posts
-    getPosts(0);
+    getPosts(0, "small");
 }
 
 //Add user from form to db using API
@@ -305,4 +392,18 @@ function printWebs(web) {
 
         ulEl.appendChild(liEl);
     })
+}
+
+//Expand blogposts card on click
+function expandCard() {
+    let elements = this.getElementsByClassName("flexi-cont");
+    if (window.getComputedStyle(elements[1], null).display === "none") {
+        for (let i = 0; i < elements.length; i++) {
+            elements[i].style.display = "block";
+        }
+    } else {
+        for (let i = 0; i < elements.length; i++) {
+            elements[i].style.display = "none";
+        }
+    }
 }
