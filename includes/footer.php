@@ -2,14 +2,22 @@
 #create new user obj
 $user = new User;
 ?>
-<footer>
-<?php 
-if($user->isLoggedIn()){
-    echo "<a href='logout.php'>Logga ut </a>";
-}
-?>
+<div class="footer-wrapper">
+    <footer>
+        <p></p>
+        <p>Kristina Abrahamsson</p>
+        <?php
+        if ($user->isLoggedIn()) {
+            echo "<a href='logout.php' class='link'>Logga ut </a>";
+        }else{
+            echo "</p>";
+        }
+        ?>
 
-</footer>
+    </footer>
+</div>
 </body>
-<script src="js/main.js"></script>
+<script src=" js/main.js">
+</script>
+
 </html>
