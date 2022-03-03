@@ -11,6 +11,7 @@ function runFunctions() {
     let page = document.body.id;
     switch (page) {
         case "index":
+            imgFunc();
             getPosts(3);
             break;
         case "adminuser":
@@ -29,6 +30,36 @@ function runFunctions() {
             getAllWebsites();
             break;
     }
+}
+
+//Img animation index page
+function imgFunc(){
+    let img1 = document.getElementById("img1");
+    let img2 = document.getElementById("img2");
+    let img3 = document.getElementById("img3");
+
+    document.addEventListener("scroll", function(){
+        let value=window.scrollY;
+        if (value < 76){
+            img1.style.opacity="1";
+            img2.style.opacity = "0";
+            img3.style.opacity="0";
+            
+        }
+        else if (value <176 && value > 76){
+            img1.style.opacity ="0";
+            img2.style.opacity = "1";
+            img3.style.opacity="0";
+        }
+        else{
+            img1.style.opacity ="0";
+            img2.style.opacity = "0";
+            img3.style.opacity="1";
+    
+            //window.setInterval(knitMove, timerStep);
+    
+        }
+    })
 }
 
 //Fetch latest posts from post API
@@ -65,7 +96,9 @@ function printPosts(posts) {
         img.alt = post.imgtext;
 
         let text = document.createElement("p");
-        let textText = document.createTextNode(post.content);
+        let content = post.content.split(" ", 50);
+        content = content.join(" ") + "...";
+        let textText = document.createTextNode(content);
         text.appendChild(textText);
 
         let link = document.createElement("a");
@@ -228,7 +261,7 @@ function checkAndPrintResponse(data, lst) {
     }
 }
 
-function addWebsite(event){
+function addWebsite(event) {
     event.preventDefault(); //Prevent page from loading
     let formData = new FormData();
 
@@ -261,7 +294,7 @@ function getAllWebsites() {
 }
 
 //Print websites to portfolio
-function printWebs(web){
+function printWebs(web) {
     let ulEl = document.getElementById("web-lst");
 
     ulEl.innerHTML = "";
