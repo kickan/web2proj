@@ -33,7 +33,6 @@ function runFunctions() {
             let webBtn = document.getElementById("webBtn");
             webBtn.addEventListener("click", addWebsite);
             getAllWebsites();
-
             break;
     }
 }
@@ -127,7 +126,6 @@ function printPosts(posts, type) {
         posts.forEach(post => {
             //Create elements and add data from post
             let cont = document.createElement("article");
-            cont.id = post.id;
             cont.classList.add("card--green");
             cont.classList.add("card--small");
             cont.addEventListener("click", expandCard);
@@ -148,12 +146,16 @@ function printPosts(posts, type) {
                 let delBtn = document.createElement("button");
                 delBtn.classList.add("btn");
                 delBtn.classList.add("btn--green");
-                delBtn.innerHTML="Radera";
+                delBtn.innerHTML = "Radera";
+                delBtn.id = post.id;
                 delBtn.addEventListener("click", deletePost);
 
                 let editBtn = document.createElement("button");
                 editBtn.classList.add("btn");
                 editBtn.classList.add("btn--white");
+                editBtn.addEventListener("click", function () {
+                    window.location.href = "editpost.php?edit=" + post.id;
+                })
                 editBtn.innerHTML = "Redigera";
 
                 btnDiv.appendChild(editBtn);
@@ -196,13 +198,15 @@ function printPosts(posts, type) {
 }
 
 //Delete post from DB via API
-function editDelPost(url){
+function deletePost() {
+    event.preventDefault();
+    let id = this.id;
+    let url = "API/post.php?delete=" + id;
     fetch(url)
-    .then(response => response.json())
-    .then(data =>)
-
+        .then(response => response.json())
+        .then(data => console.log(data))
+    getPosts(0, "small")
 }
-
 
 //Add post to db with API
 function addPost(event) {
@@ -356,11 +360,13 @@ function addWebsite(event) {
     const titleInput = document.getElementById("title");
     const imgInput = document.getElementById("file");
     const contentInput = document.getElementById("content");
+    const linkInput = document.getElementById("link");
 
     //Append form values
     formData.append("title", titleInput.value);
     formData.append("content", contentInput.value);
     formData.append("file", imgInput.files[0]);
+    formData.append("link", linkInput.value);
 
     //POST users to API
     fetch("API/web.php", {
@@ -368,7 +374,7 @@ function addWebsite(event) {
         body: formData
     })
         .then(response => response.json())
-        .then(data => checkAndPrintResponse(data, ["title", "file", "content"]));
+        .then(data => checkAndPrintResponse(data, ["title", "file", "content", "link"]));
 
     getAllWebsites();
 }
@@ -381,18 +387,76 @@ function getAllWebsites() {
 }
 
 //Print websites to portfolio
-function printWebs(web) {
-    let ulEl = document.getElementById("web-lst");
+function printWebs(webs) {
+    const contEl = document.getElementById("web-container");
+    contEl.innerHTML = ""; //Empty element
 
-    ulEl.innerHTML = "";
-    web.forEach(web => {
-        let liEl = document.createElement("li");
-        let textNode = document.createTextNode(web.title);
-        liEl.appendChild(textNode);
+    webs.forEach(web => {
+        //Create elements and add data from post
+        let cont = document.createElement("article");
+        cont.classList.add("card--green");
+        cont.classList.add("card--small");
+        cont.addEventListener("click", expandCard);
 
-        ulEl.appendChild(liEl);
+        let div = document.createElement("div");
+        div.classList.add("card--heading");
+
+        let h3 = document.createElement("h3");
+        let h3text = document.createTextNode(web.title);
+        h3.appendChild(h3text);
+        div.appendChild(h3);
+
+        if (admin) {
+            let btnDiv = document.createElement("div");
+            btnDiv.classList.add("btnDiv");
+
+            //create edit and delete btn
+            let delBtn = document.createElement("button");
+            delBtn.classList.add("btn");
+            delBtn.classList.add("btn--green");
+            delBtn.innerHTML = "Radera";
+            delBtn.id = web.id;
+            delBtn.addEventListener("click", deleteWeb);
+
+            let editBtn = document.createElement("button");
+            editBtn.classList.add("btn");
+            editBtn.classList.add("btn--white");
+            editBtn.addEventListener("click", function () {
+                window.location.href = "edit.php?edit=" + web.id;
+            })
+            editBtn.innerHTML = "Redigera";
+
+            btnDiv.appendChild(editBtn);
+            btnDiv.appendChild(delBtn);
+
+            div.appendChild(btnDiv);
+        }
+        cont.appendChild(div);
+
+        let img = document.createElement("img");
+        img.classList.add("flexi-cont");
+        img.src = "img/" + web.img;
+        img.alt ="";
+        cont.appendChild(img);
+
+        let text = document.createElement("p");
+        text.classList.add("flexi-cont");
+        let textText = document.createTextNode(web.content);
+        text.appendChild(textText);
+        cont.appendChild(text);
+
+        let link = document.createElement("a");
+        link.classList.add("flexi-cont");
+        link.href = web.link;
+        link.innerHTML = "Besök webbplats";
+        cont.appendChild(link);
+
+        //Append article to container
+        contEl.appendChild(cont);
     })
+
 }
+
 
 //Expand blogposts card on click
 function expandCard() {
@@ -406,4 +470,14 @@ function expandCard() {
             elements[i].style.display = "none";
         }
     }
+}
+
+function deleteWeb(){
+    event.preventDefault();
+    let id = this.id;
+    let url = "API/web.php?delete=" + id;
+    fetch(url)
+        .then(response => response.json())
+        .then(data => console.log(data))
+    getAllWebsites();
 }

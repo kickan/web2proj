@@ -35,19 +35,20 @@ class Website
     /**
      * Add website to portfolio
      * @param string $title
-     * @param string $description
+     * @param string $content
      * @param string $img
      * @return bool
      */
-    public function addWebsite(string $title, string $description, string $img): bool
+    public function addWebsite(string $title, string $content, string $img, string $link): bool
     {
         #Secure input
         $title = $this->secureInput($title);
-        $description = $this->secureInput($description);
+        $content = $this->secureInput($content);
         $img = $this->secureInput($img);
+        $link = $this->secureInput($link);
 
         #Create question to db
-        $sql = "INSERT INTO website (title, description, img) VALUES ('$title', '$description', '$img');";
+        $sql = "INSERT INTO website (title, content, img, link) VALUES ('$title', '$content', '$img', '$link');";
 
         #Send question to db
         return $this->db->query($sql);
@@ -104,4 +105,22 @@ class Website
         #return all websites as assoc array
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+
+        /**
+     * Update website
+     * @param string $id
+     * @return bool
+     */
+    public function updateWebsite(string $id, string $title, string $content, string $link): bool
+    {
+        #Secure input
+        $id = $this->secureInput($id);
+        
+        #Create question to db
+        $sql = "UPDATE website SET title = '$title', content = '$content', link ='$link' WHERE id = $id;";
+
+        #Send question to db adn return result
+        return $this->db->query($sql);
+    }
+
 }

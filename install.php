@@ -45,8 +45,9 @@ include("includes/config.php");
         CREATE TABLE website(
             id INT(2) PRIMARY KEY AUTO_INCREMENT,
             title VARCHAR(128),
-            description VARCHAR(256) NOT NULL,
+            content VARCHAR(256) NOT NULL,
             img VARCHAR (128),
+            link VARCHAR (300),
             created TIMESTAMP DEFAULT CURRENT_TIMESTAMP);";
 
     #Echo query

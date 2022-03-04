@@ -16,7 +16,7 @@ if (!$user->isLoggedIn()) {
 }
 ?>
 <main>
-    <h1>Admin</h1>
+    <h1 class="center-heading">Admin</h1>
     <?php include("includes/adminnav.php") ?>
 
     <section class="center-box">
@@ -27,6 +27,8 @@ if (!$user->isLoggedIn()) {
             <input type="hidden" name="MAX_FILE_SIZE" value="200000" /> <!-- 200K max storlek -->
             <label for="file">Bild:</label><br>
             <input type="file" name="file" id="file" /><br>
+            <label for="link">Länk till webbplats: </label>
+            <input type="url" name="link" id="link">
             <label for="content">Beskrivning: </label><br>
             <textarea name="content" id="content" cols="30" rows="10" style="resize: vertical"></textarea><br>
             <input type="submit" id="webBtn" value="Lägg till webbsida" class="btn btn--green">
@@ -34,10 +36,9 @@ if (!$user->isLoggedIn()) {
         </form>
     </section>
     <section>
-        <h2>Publicerade webbplatser</h2>
-        <ul id="web-lst">
-
-        </ul>
+        <h2 class="center-heading">Publicerade webbplatser</h2>
+        <section id="web-container">
+        </section>
     </section>
 </main>
 <?php
