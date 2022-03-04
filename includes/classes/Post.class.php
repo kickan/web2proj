@@ -99,6 +99,23 @@ class Post
     }
 
     /**
+     * Update single post
+     * @param string $id
+     * @return bool
+     */
+    public function updatePost(string $id, string $title, string $content): bool
+    {
+        #Secure input
+        $id = $this->secureInput($id);
+        
+        #Create question to db
+        $sql = "UPDATE post SET title = '$title', content = '$content' WHERE id = $id;";
+
+        #Send question to db adn return result
+        return $this->db->query($sql);
+    }
+
+    /**
      * Delete single post
      * @param string $id
      * @return bool
