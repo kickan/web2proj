@@ -325,3 +325,66 @@ background-color: #EDF6EA;
 }
 
 #user-table tr:nth-child(even) {background-color: #EDF6EA;}
+
+/*PORTFOLIO*/
+.web-container{
+    margin: 5rem auto;
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: 3rem;
+    padding: 8rem 5rem;
+    max-width: 1700px;
+}
+
+.web-container:nth-child(even){
+    width: 97%;
+    grid-template-areas: 
+    "desc img";
+    border: #6BA44B solid 1px;
+}
+
+.web-container:nth-child(odd){
+    width: 100%;
+    grid-template-areas: 
+    "img desc";
+    background-color: #EDF6EA;
+}
+
+.web-img{
+    grid-area: img;
+    width: 100%;
+    border: 1px solid black;
+}
+
+.web-content{
+    width: 600px;
+    color: #707070;
+}
+
+.web-link{
+color: #707070;
+text-decoration: none;
+}
+
+.web-link:hover{
+    color: black;
+    text-decoration: underline;
+}
+
+.web-link:focus{
+    outline: solid 1px black;
+    color: black;
+}
+
+.web-content-container{
+    grid-area: desc;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.header-center{
+    margin: 5rem;
+    text-align: center;
+
+}
