@@ -15,7 +15,7 @@ include("includes/header.php");
             <p class="intro__text">creative designer</p>
         </div>
     </section>
-    <section class="full card__container" id="post-container"><!--blog posts -->
+    <section class="card__container" id="post-container"><!--blog posts -->
     </section>
 </main>
 <?php

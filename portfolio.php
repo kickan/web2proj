@@ -3,7 +3,7 @@ $pagename = "Portfolio";
 $bodyId = "portfolio";
 include("includes/header.php");
 
-#create new post obj
+#create new web obj
 $web = new Website;
 
 #get list of websites
@@ -23,7 +23,11 @@ $webLst = $web->getAllWebsites();
                 <p class="web-content"><?= $w["content"] ?></p>
                 <a href="<?= $w["link"] ?>" class="web-link">Besök webbplatsen</a>
             </div>
-            <img src="img/<?= $w["img"] ?>" class="web-img" alt="">
+            <?php if ($w["img"] != "") {
+            ?>
+                <img src="img/<?= $w["img"] ?>" class="web-img" alt=""> <?php
+                                                                    } ?>
+
         </section><?php
                 }
                     ?>

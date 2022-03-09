@@ -90,6 +90,7 @@ main {
     padding: 1px;
     background: linear-gradient(to left, rgba(107, 164, 75, 0), #6BA44B);
     height: 66.8px;
+    margin-top: 5rem;
 }
 
 footer {
@@ -176,17 +177,18 @@ footer {
 }
 
 .card__container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: stretch;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: 700px;
+    row-gap: 3rem;
+    max-width: 1700px;
+    margin: auto;
 }
 
 .card {
     padding: 3rem;
-    width: 30%;
     max-width: 500px;
-    margin: 3rem auto;
+    margin: 0 auto;
 }
 
 .card--green {
@@ -199,32 +201,32 @@ footer {
     margin: 2rem 0;
 }
 
-.card--small{
+.card--small {
     width: 80%;
     margin: 2rem auto;
     padding: 3rem;
     transition: all 500ms linear;
 }
 
-.card--small:hover{
-background-color: #EDF6EA;
+.card--small:hover {
+    background-color: #EDF6EA;
 }
 
-.card--small .flexi-cont{
+.card--small .flexi-cont {
     display: none;
 }
 
-.card--small img{
+.card--small img {
     max-width: 300px;
 }
 
-.card--heading{
+.card--heading {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.btnDiv .btn{
+.btnDiv .btn {
     margin: 0 1rem;
 }
 
@@ -267,23 +269,25 @@ background-color: #EDF6EA;
     padding: 2rem;
 }
 
-.center-heading{
+.center-heading {
     margin: 2rem auto;
     width: 90%;
     max-width: 800px;
 }
 
-.form{
+.form {
     width: 100%;
 }
 
-.form label{
+.form label {
     margin-top: 1rem;
 }
-.form p{
+
+.form p {
     margin: 1rem 0;
 }
-.form--green input, .form--green textarea{
+
+.form--green input, .form--green textarea {
     width: 100%;
     padding: 0.5rem;
     border: #6BA44B solid 1px;
@@ -293,41 +297,46 @@ background-color: #EDF6EA;
 .form--green input:focus, .form--green textarea:focus {
     outline: #6BA44B solid 2px;
 }
-.btn{
+
+.btn {
     font-family: 'Fuzzy Bubbles', cursive;
     padding: 1rem;
 }
 
-.form .btn{
+.form .btn {
     width: 40% !important;
 }
 
-.btn--white{
+.btn--white {
     border: #6BA44B solid 1px;
     background-color: white;
 }
-.btn--green{
+
+.btn--green {
     background-color: #EDF6EA;
     border: #6BA44B solid 1px;
 }
 
-.btn--green:hover, .btn--white:hover{
- background-color: #6BA44B;
- transform: translate(-1px, -1px);   
-}
-.btn--green:focus, .btn--white:focus{
+.btn--green:hover, .btn--white:hover {
     background-color: #6BA44B;
-    transform: translate(-1px, -1px);  
+    transform: translate(-1px, -1px);
 }
 
-#user-table{
+.btn--green:focus, .btn--white:focus {
+    background-color: #6BA44B;
+    transform: translate(-1px, -1px);
+}
+
+#user-table {
     width: 100%;
 }
 
-#user-table tr:nth-child(even) {background-color: #EDF6EA;}
+#user-table tr:nth-child(even) {
+    background-color: #EDF6EA;
+}
 
 /*PORTFOLIO*/
-.web-container{
+.web-container, .single-post {
     margin: 5rem auto;
     display: grid;
     grid-template-columns: auto auto;
@@ -336,55 +345,74 @@ background-color: #EDF6EA;
     max-width: 1700px;
 }
 
-.web-container:nth-child(even){
+.web-container:nth-child(even) {
     width: 97%;
-    grid-template-areas: 
-    "desc img";
+    grid-template-areas:
+        "desc img";
     border: #6BA44B solid 1px;
 }
 
-.web-container:nth-child(odd){
+.web-container:nth-child(odd) {
     width: 100%;
-    grid-template-areas: 
-    "img desc";
+    grid-template-areas:
+        "img desc";
     background-color: #EDF6EA;
 }
 
-.web-img{
+.web-img {
     grid-area: img;
     width: 100%;
     border: 1px solid black;
 }
 
-.web-content{
+.web-content {
     width: 600px;
     color: #707070;
 }
 
-.web-link{
-color: #707070;
-text-decoration: none;
+.web-link {
+    color: #707070;
+    text-decoration: none;
 }
 
-.web-link:hover{
+.web-link:hover {
     color: black;
     text-decoration: underline;
 }
 
-.web-link:focus{
+.web-link:focus {
     outline: solid 1px black;
     color: black;
 }
 
-.web-content-container{
+.web-content-container {
     grid-area: desc;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
-.header-center{
+.header-center {
     margin: 5rem;
     text-align: center;
 
+}
+
+/*single page*/
+.card--big {
+    padding: 3rem;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.card--big img{
+    width: 100%;
+}
+
+.error{
+    color: red;
+}
+
+.ok-message{
+    color:green;
 }

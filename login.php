@@ -30,15 +30,17 @@ if (isset($_POST['logInBtn'])) {
 ?>
 
 <main>
-    <h1>Logga in</h1>
-    <form action="login.php" method="post">
+    <h1 class="header-center">Logga in</h1>
+    <section class="card">
+    <form action="login.php" method="post" class="form form--green">
         <label for="username">Användarnamn: </label><br>
         <input type="text" id="username" name="username" value="<?= $f_username ?>"><br>
         <label for="password">Lösenord: </label><br>
         <input type="password" id="password" name="password"><br>
-        <input type="submit" name="logInBtn">
-        <p><?= $message ?></p>
+        <input type="submit" name="logInBtn" value="Logga in" class="btn btn--green">
+        <p class="error"><?= $message ?></p>
     </form>
+    </section>
 </main>
 <?php
 include("includes/footer.php");

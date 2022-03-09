@@ -34,6 +34,9 @@ function runFunctions() {
             webBtn.addEventListener("click", addWebsite);
             getAllWebsites();
             break;
+        case "blog":
+            getPosts(0, "big");
+            break;
     }
 }
 
@@ -331,6 +334,7 @@ function checkAndPrintResponse(data, lst) {
     if (errorno == 0) {
         //Print message
         let p = document.createElement("p");
+        p.classList.add("ok-message");
         p.innerHTML = data.message;
         box.appendChild(p);
         //If user added, empty form
@@ -346,6 +350,7 @@ function checkAndPrintResponse(data, lst) {
         for (let i = 0; i < errorno; i++) {
             //Print error messages
             let p = document.createElement("p");
+            p.classList.add("error");
             p.innerHTML = messages[i];
             box.appendChild(p);
         }
@@ -436,7 +441,7 @@ function printWebs(webs) {
         let img = document.createElement("img");
         img.classList.add("flexi-cont");
         img.src = "img/" + web.img;
-        img.alt ="";
+        img.alt = "";
         cont.appendChild(img);
 
         let text = document.createElement("p");
@@ -472,7 +477,7 @@ function expandCard() {
     }
 }
 
-function deleteWeb(){
+function deleteWeb() {
     event.preventDefault();
     let id = this.id;
     let url = "API/web.php?delete=" + id;
