@@ -50,6 +50,35 @@ include("includes/config.php");
             link VARCHAR (300),
             created TIMESTAMP DEFAULT CURRENT_TIMESTAMP);";
 
+    #Create about me table
+    $sql .= "DROP TABLE IF EXISTS about;
+    CREATE TABLE about(
+        id INT(1) PRIMARY KEY AUTO_INCREMENT,
+        slogan VARCHAR(128),
+        content TEXT NOT NULL,
+        img VARCHAR (128));";
+    #Insert default data in about me table
+    $sql .= "INSERT INTO about (slogan, content) VALUES ('Developer, problem solver, creative designer', 'Om mig...');";
+
+    #Create experience table
+    $sql .= "DROP TABLE IF EXISTS experience;
+    CREATE TABLE experience(
+        id INT(2) PRIMARY KEY AUTO_INCREMENT,
+        title VARCHAR(128),
+        location VARCHAR(128),
+        startDate DATE,
+        endDate DATE,
+        content TEXT NOT NULL,
+        type VARCHAR(128));";
+
+        #Create language table
+        $sql .= "DROP TABLE IF EXISTS language;
+        CREATE TABLE language(
+            id INT(2) PRIMARY KEY AUTO_INCREMENT,
+            name VARCHAR(128),
+            level VARCHAR(128),
+            type VARCHAR(128));";
+
     #Echo query
     echo "<pre>$sql</pre>";
 

@@ -22,7 +22,7 @@ $user = new User;
 <body id="<?= $bodyId ?>">
     <div class="header-wrapper">
         <header>
-            <p> <a href="index.php" class="link">Kristina Abrahamsson</a></p>
+            <p class="text-nomargin"> <a href="index.php" class="link">Kristina Abrahamsson</a></p>
 
             <nav class="glob-nav">
                 <ul class="nav-lst glob-nav__lst">

@@ -1,5 +1,5 @@
 <?php
-$pagename = "Admin";
+$pagename = "Admin Portfolio";
 $bodyId = "admin";
 
 include_once("includes/config.php");
@@ -20,7 +20,7 @@ if (!$user->isLoggedIn()) {
     <?php include("includes/adminnav.php") ?>
 
     <section class="center-box">
-        <h2>Portfolio</h2>
+        <h2>Lägg till ny webbplats</h2>
         <form action="admin.php" method="POST" enctype="multipart/form-data" class="form form--green">
             <label for="title">Titel: </label><br>
             <input type="text" id="title" name="title"><br>
