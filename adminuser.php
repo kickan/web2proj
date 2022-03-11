@@ -15,7 +15,7 @@ if (!$user->isLoggedIn()) {
 <main>
     <h1 class="center-heading">Admin</h1>
     <?php include("includes/adminnav.php") ?>
-    <section class="center-box">
+    <section class="center-box no-top">
         <section>
             <h2>Skapa ny användare</h2>
             <form class="form form--green">

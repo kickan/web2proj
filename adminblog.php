@@ -17,7 +17,7 @@ if (!$user->isLoggedIn()) {
     <h1 class="center-heading">Admin</h1>
     <?php include("includes/adminnav.php") ?>
 
-    <section class="center-box">
+    <section class="center-box no-top">
         <h2>Skapa nytt blogginlägg</h2>
         <form action="adminblog.php" method="POST" enctype="multipart/form-data" class="form form--green">
             <label for="title">Titel: </label><br>

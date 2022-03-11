@@ -119,6 +119,23 @@ class Skills
     }
 
     /**
+     * Get specific experience
+     * @param int $id
+     * @return array
+     */
+    public function getSingleExp(int $id) : array
+    {
+        #Create question to db
+        $sql = "SELECT * FROM experience WHERE id = $id;";
+
+        #Send question to db
+        $result = $this->db->query($sql);
+
+        #Return single post as assoc array
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    /**
      * Update experience
      * @param int $id
      * @return bool
@@ -153,7 +170,7 @@ class Skills
      * @param int $id
      * @return bool
      */
-    public function deleteEpx(int $id): bool
+    public function deleteExp(int $id): bool
     {
         #secure input
         $id = $this->secureInput($id);
@@ -202,6 +219,23 @@ class Skills
     }
 
     /**
+     * Get specific language
+     * @param int $id
+     * @return array
+     */
+    public function getSingleLan(int $id) : array
+    {
+        #Create question to db
+        $sql = "SELECT * FROM language WHERE id = $id;";
+
+        #Send question to db
+        $result = $this->db->query($sql);
+
+        #Return single post as assoc array
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    /**
      * Update language
      * @param int $id
      * @param string $name
@@ -212,14 +246,14 @@ class Skills
     public function updateLan(int $id, string $name, string $level, string $type): bool
     {
         #Create question to db
-        $sql = "UPDATE langugage SET name = '$name', level = '$level', type = '$type' WHERE id = $id;";
+        $sql = "UPDATE language SET name = '$name', level = '$level', type = '$type' WHERE id = $id;";
 
         #Send question to db adn return result
         return $this->db->query($sql);
     }
 
     /**
-     * Delete langugage
+     * Delete language
      * @param int $id
      * @return bool
      */
@@ -229,7 +263,7 @@ class Skills
         $id = $this->secureInput($id);
 
         #Create question to db
-        $sql = "DELETE FROM langugage WHERE id = $id;";
+        $sql = "DELETE FROM language WHERE id = $id;";
 
         #Send question to db
         return $this->db->query($sql);

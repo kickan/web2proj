@@ -37,6 +37,20 @@ function runFunctions() {
         case "blog":
             getPosts(0, "big");
             break;
+        case "adminskills":
+            admin = true;
+            let aboutBtn = document.getElementById("about-btn");
+            aboutBtn.addEventListener("click", updateAboutMe);
+
+            let expBtn = document.getElementById("exp-Btn");
+            expBtn.addEventListener("click", createExp);
+
+            let lanBtn = document.getElementById("lan-Btn");
+            lanBtn.addEventListener("click", createLan);
+            getAbout();
+            getExp();
+            getLan();
+            break;
     }
 }
 
@@ -63,12 +77,407 @@ function imgFunc() {
             img1.style.opacity = "0";
             img2.style.opacity = "0";
             img3.style.opacity = "1";
-
-            //window.setInterval(knitMove, timerStep);
-
         }
     })
 }
+
+//---------------ADMINSKILLS-----------//
+//Fetch about me information from API
+function getAbout() {
+    fetch("API/about.php")
+        .then(response => response.json())
+        .then(data => printAboutMe(data));
+}
+
+//Print about me information on adminskills page
+function printAboutMe(data) {
+    let sloganEl = document.getElementById("slogan");
+    let contentEl = document.getElementById("about-content");
+
+    sloganEl.value = data[0].slogan;
+    contentEl.innerHTML = data[0].content;
+}
+
+//Update about me information
+function updateAboutMe(event) {
+    event.preventDefault();
+    let formData = new FormData();
+
+    //Get form elements
+    let slogan = document.getElementById("slogan");
+    let content = document.getElementById("about-content");
+
+    //Append form values
+    formData.append("slogan", slogan.value);
+    formData.append("content", content.value);
+
+    //POST data to API
+    fetch("API/about.php", {
+        method: "POST",
+        body: formData
+    })
+        .then(response => response.json())
+        .then(data => checkAndPrintResponse(data, "about-message", []));
+
+}
+
+//Create new experience via API
+function createExp() {
+    event.preventDefault();
+    let formData = new FormData();
+
+    //Get form elements
+    let type = document.getElementById("exp-type");
+    let title = document.getElementById("title");
+    let loc = document.getElementById("location");
+    let sDate = document.getElementById("startdate");
+    let eDate = document.getElementById("enddate");
+    let content = document.getElementById("exp-content");
+    console.log(title);
+
+    //Append form values
+    formData.append("type", type.value);
+    formData.append("title", title.value);
+    formData.append("location", loc.value);
+    formData.append("startdate", sDate.value);
+    formData.append("enddate", eDate.value);
+    formData.append("content", content.value);
+
+    //POST data to API
+    fetch("API/exp.php", {
+        method: "POST",
+        body: formData
+    })
+        .then(response => response.json())
+        .then(data => checkAndPrintResponse(data, "exp-message", ["title", "location", "startdate", "enddate", "exp-content"]));
+
+    getExp();
+}
+
+//Fetch experiences from exp API
+function getExp() {
+    fetch("API/exp.php")
+        .then(response => response.json())
+        .then(data => printExp(data));
+}
+
+//Print experiences
+function printExp(exp) {
+    let containerEl = document.getElementById("exp-container");
+
+    //Remove children
+    containerEl.innerHTML = "";
+    exp.forEach(e => {
+        let article = document.createElement("article");
+        article.classList.add("card--small");
+        article.classList.add("card--green");
+        article.addEventListener("click", expandCard);
+
+        let title = document.createElement("h3");
+        title.innerHTML = e.title;
+
+        let div = document.createElement("div");
+        div.classList.add("card--heading");
+        div.appendChild(title);
+
+        if (admin) {
+            let btnDiv = document.createElement("div");
+            btnDiv.classList.add("btnDiv");
+
+            //create edit and delete btn
+            let delBtn = document.createElement("button");
+            delBtn.classList.add("btn");
+            delBtn.classList.add("btn--green");
+            delBtn.innerHTML = "Radera";
+            delBtn.id = e.id;
+            delBtn.addEventListener("click", deleteExp);
+
+            let editBtn = document.createElement("button");
+            editBtn.classList.add("btn");
+            editBtn.classList.add("btn--white");
+            editBtn.id = "e" + e.id;
+            editBtn.addEventListener("click", getSingleExp)
+            editBtn.innerHTML = "Redigera";
+
+            btnDiv.appendChild(editBtn);
+            btnDiv.appendChild(delBtn);
+
+            div.appendChild(btnDiv);
+        }
+
+        let loc = document.createElement("p");
+        loc.innerHTML = e.location;
+
+        let p = document.createElement("p");
+        p.classList.add("flexi-cont");
+        let text = document.createTextNode(e.content);
+        p.appendChild(text);
+
+        article.appendChild(div);
+        article.appendChild(loc);
+        article.appendChild(p);
+
+        containerEl.append(article);
+    })
+}
+
+function deleteExp() {
+    event.preventDefault();
+    let id = this.id;
+    let url = "API/exp.php?delete=" + id;
+    fetch(url)
+        .then(response => response.json())
+        .then(data => console.log(data))
+    getExp();
+}
+
+function getSingleExp() {
+    let form = document.getElementById("exp-form");
+    form.scrollIntoView();
+    event.preventDefault();
+    let id = this.id;
+    id = id[1];
+    console.log(id);
+    let url = "API/exp.php?getSingle=" + id;
+    fetch(url)
+        .then(response => response.json())
+        .then(data => printExpForm(data))
+}
+
+function printExpForm(exp) {
+    let type = document.getElementById("exp-type");
+    let title = document.getElementById("title");
+    let loc = document.getElementById("location");
+    let sDate = document.getElementById("startdate");
+    let eDate = document.getElementById("enddate");
+    let content = document.getElementById("exp-content");
+
+    type.value = exp[0].type;
+    title.value = exp[0].title;
+    loc.value = exp[0].location;
+    sDate.value = exp[0].startDate;
+    eDate.value = exp[0].endDate;
+    content.value = exp[0].content;
+
+    //Fix buttons
+    let btn = document.createElement("button");
+    btn.classList.add("btn");
+    btn.classList.add("btn--green");
+    btn.innerHTML = "Spara ändringar";
+    btn.id = exp[0].id;
+    btn.addEventListener("click", updateExp);
+    content.parentNode.appendChild(btn);
+
+    //hide save btn
+    let saveBtn = document.getElementById("exp-Btn");
+    saveBtn.style.display = "none";
+}
+
+function updateExp() {
+    event.preventDefault();
+    let id = this.id;
+    let formData = new FormData();
+
+    //Get form elements
+    let type = document.getElementById("exp-type");
+    let title = document.getElementById("title");
+    let loc = document.getElementById("location");
+    let sDate = document.getElementById("startdate");
+    let eDate = document.getElementById("enddate");
+    let content = document.getElementById("exp-content");
+    console.log(title);
+
+    //Append form values
+    formData.append("update", id);
+    formData.append("type", type.value);
+    formData.append("title", title.value);
+    formData.append("location", loc.value);
+    formData.append("startDate", sDate.value);
+    formData.append("endDate", eDate.value);
+    formData.append("content", content.value);
+
+    //POST data to API
+    fetch("API/exp.php?update=", {
+        method: "POST",
+        body: formData
+    })
+        .then(response => response.json())
+        .then(data => checkAndPrintResponse(data, "exp-message", ["title", "location", "startdate", "enddate", "exp-content"]));
+
+    //Remove update btn
+    title.parentNode.removeChild(title.parentNode.lastChild);
+
+    //Make saveBtn visable
+    let saveBtn = document.getElementById("exp-Btn");
+    saveBtn.style.display = "block";
+
+    getExp();
+}
+
+function createLan() {
+    event.preventDefault();
+    let formData = new FormData();
+
+    //Get form elements
+    let type = document.getElementById("lan-type");
+    let name = document.getElementById("name");
+    let level = document.getElementById("level");
+
+
+    //Append form values
+    formData.append("type", type.value);
+    formData.append("name", name.value);
+    formData.append("level", level.value);
+
+    //POST data to API
+    fetch("API/lan.php", {
+        method: "POST",
+        body: formData
+    })
+        .then(response => response.json())
+        .then(data => checkAndPrintResponse(data, "lan-message", ["name", "level"]));
+
+    getLan();
+}
+
+function getLan() {
+    fetch("API/lan.php")
+        .then(response => response.json())
+        .then(data => printLan(data));
+}
+
+function printLan(lan) {
+    //Print experiences
+    let containerEl = document.getElementById("lan-container");
+
+    //Remove children
+    containerEl.innerHTML = "";
+
+    lan.forEach(l => {
+        let article = document.createElement("article");
+        article.classList.add("card--small");
+        article.classList.add("card--green");
+
+        let title = document.createElement("h3");
+        title.innerHTML = l.name;
+
+        let div = document.createElement("div");
+        div.classList.add("card--heading");
+        div.appendChild(title);
+
+        if (admin) {
+            let btnDiv = document.createElement("div");
+            btnDiv.classList.add("btnDiv");
+
+            //create edit and delete btn
+            let delBtn = document.createElement("button");
+            delBtn.classList.add("btn");
+            delBtn.classList.add("btn--green");
+            delBtn.innerHTML = "Radera";
+            delBtn.id = l.id;
+            delBtn.addEventListener("click", deleteLan);
+
+            let editBtn = document.createElement("button");
+            editBtn.classList.add("btn");
+            editBtn.classList.add("btn--white");
+            editBtn.id = "e" + l.id;
+            editBtn.addEventListener("click", getSingleLan)
+            editBtn.innerHTML = "Redigera";
+
+            btnDiv.appendChild(editBtn);
+            btnDiv.appendChild(delBtn);
+
+            div.appendChild(btnDiv);
+        }
+        article.appendChild(div);
+
+        containerEl.append(article);
+    })
+}
+
+function deleteLan() {
+    event.preventDefault();
+    let id = this.id;
+    let url = "API/lan.php?delete=" + id;
+    fetch(url)
+        .then(response => response.json())
+        .then(data => console.log(data))
+    getLan();
+}
+
+function getSingleLan() {
+    let form = document.getElementById("lan-form");
+    form.scrollIntoView();
+    event.preventDefault();
+    let id = this.id;
+    id = id[1];
+    console.log(id);
+    let url = "API/lan.php?getSingle=" + id;
+    fetch(url)
+        .then(response => response.json())
+        .then(data => printLanForm(data))
+}
+
+function printLanForm(lan) {
+    let type = document.getElementById("lan-type");
+    let name = document.getElementById("name");
+    let level = document.getElementById("level");
+
+
+    type.value = lan[0].type;
+    name.value = lan[0].name;
+    level.value = lan[0].level;
+
+    //Fix buttons
+    let btn = document.createElement("button");
+    btn.classList.add("btn");
+    btn.classList.add("btn--green");
+    btn.innerHTML = "Spara ändringar";
+    btn.id = lan[0].id;
+    btn.addEventListener("click", updateLan);
+    name.parentNode.appendChild(btn);
+
+    //hide save btn
+    let saveBtn = document.getElementById("lan-Btn");
+    saveBtn.style.display = "none";
+}
+function updateLan() {
+    event.preventDefault();
+    let id = this.id;
+    let formData = new FormData();
+
+    //Get form elements
+    let type = document.getElementById("lan-type");
+    let name = document.getElementById("name");
+    let level = document.getElementById("level");
+
+
+    //Append form values
+    formData.append("update", id);
+    formData.append("type", type.value);
+    formData.append("name", name.value);
+    formData.append("level", level.value);
+
+    //POST data to API
+    fetch("API/lan.php", {
+        method: "POST",
+        body: formData
+    })
+        .then(response => response.json())
+        .then(data => checkAndPrintResponse(data, "lan-message", ["name", "level"]));
+
+    //Remove update btn
+    name.parentNode.removeChild(name.parentNode.lastChild);
+
+    //Make saveBtn visable
+    let saveBtn = document.getElementById("lan-Btn");
+    saveBtn.style.display = "block";
+
+    getLan();
+}
+
+
+//-----------------------------------------//
 
 //Fetch latest posts from post API
 function getPosts(number, type) {
@@ -234,7 +643,7 @@ function addPost(event) {
         body: formData
     })
         .then(response => response.json())
-        .then(data => checkAndPrintResponse(data, ["title", "content", "file", "imgtext"]));
+        .then(data => checkAndPrintResponse(data, "post-message", ["title", "content", "file", "imgtext"]));
 
     //Update list of posts
     getPosts(0, "small");
@@ -263,7 +672,7 @@ function addUser(event) {
         body: formData
     })
         .then(response => response.json())
-        .then(data => checkAndPrintResponse(data, ["name", "username"]));
+        .then(data => checkAndPrintResponse(data, "user-message", ["name", "username"]));
 
     //Empty password fields
     pass1Input.value = "";
@@ -321,9 +730,9 @@ function fixDate(stringDate) {
 }
 
 
-function checkAndPrintResponse(data, lst) {
+function checkAndPrintResponse(data, messEl, lst) {
     //Get reference to messagebox
-    let box = document.getElementById("message-box");
+    let box = document.getElementById(messEl);
 
     //Empty box content
     box.innerHTML = "";
@@ -379,7 +788,7 @@ function addWebsite(event) {
         body: formData
     })
         .then(response => response.json())
-        .then(data => checkAndPrintResponse(data, ["title", "file", "content", "link"]));
+        .then(data => checkAndPrintResponse(data, "web-message", ["title", "file", "content", "link"]));
 
     getAllWebsites();
 }
@@ -466,7 +875,7 @@ function printWebs(webs) {
 //Expand blogposts card on click
 function expandCard() {
     let elements = this.getElementsByClassName("flexi-cont");
-    if (window.getComputedStyle(elements[1], null).display === "none") {
+    if (window.getComputedStyle(elements[0], null).display === "none") {
         for (let i = 0; i < elements.length; i++) {
             elements[i].style.display = "block";
         }

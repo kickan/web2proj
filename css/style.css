@@ -149,6 +149,8 @@ footer {
 /*intro section*/
 .intro__sec {
     position: relative;
+    max-width: 1700px;
+    margin: auto;
 }
 
 .intro__header {
@@ -187,16 +189,19 @@ footer {
 
 .card__container {
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 700px;
-    row-gap: 3rem;
-    max-width: 1700px;
+    row-gap: 20px;
+    column-gap: 20px;
+    max-width: 1500px;
+    width: 90%;
     margin: auto;
 }
 
 .card {
     padding: 3rem;
     max-width: 500px;
+    min-width: 100%;
     margin: 0 auto;
 }
 
@@ -271,11 +276,15 @@ footer {
 
 .center-box {
     border: solid 1px #6BA44B;
-    border-top: none;
+
     margin: 0 auto 2rem auto;
     width: 90%;
     max-width: 800px;
     padding: 2rem;
+}
+
+.no-top{
+    border-top: none;
 }
 
 .center-heading {
