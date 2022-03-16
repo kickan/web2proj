@@ -45,7 +45,8 @@ p, a, label, input, textarea, li, td, button, select, option {
     font-size: 1.8rem;
     font-family: 'Open Sans', sans-serif;
 }
-p{
+
+p {
     margin-top: 1rem;
     margin-bottom: 1rem;
 }
@@ -65,7 +66,7 @@ body {
         "footer";
 }
 
-.text-nomargin{
+.text-nomargin {
     margin: 0;
 }
 
@@ -144,6 +145,36 @@ footer {
 .nav-lst a:focus, .link:focus {
     outline: solid 1px black;
     color: black;
+}
+
+.admin-nav {
+    margin: auto;
+    width: 90%;
+    max-width: 800px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.admin-nav li {
+    padding: 1rem;
+    background-color: #EDF6EA;
+    width: 25%;
+    border: #6BA44B solid 1px;
+    list-style: none;
+    text-align: center;
+    border-radius: 6px 6px 0px 0px;
+}
+
+.admin-nav a {
+    display: block;
+    height: 100%;
+    width: 100%;
+
+}
+
+.admin-nav-li--active {
+    border-bottom: none !important;
+    background-color: white !important;
 }
 
 /*intro section*/
@@ -240,40 +271,6 @@ footer {
     align-items: center;
 }
 
-.btnDiv .btn {
-    margin: 0 1rem;
-}
-
-.admin-nav {
-    margin: auto;
-    width: 90%;
-    max-width: 800px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.admin-nav li {
-    padding: 1rem;
-    background-color: #EDF6EA;
-    width: 25%;
-    border: #6BA44B solid 1px;
-    list-style: none;
-    text-align: center;
-    border-radius: 6px 6px 0px 0px;
-}
-
-.admin-nav a {
-    display: block;
-    height: 100%;
-    width: 100%;
-
-}
-
-.admin-nav-li--active {
-    border-bottom: none !important;
-    background-color: white !important;
-}
-
 .center-box {
     border: solid 1px #6BA44B;
 
@@ -283,7 +280,7 @@ footer {
     padding: 2rem;
 }
 
-.no-top{
+.no-top {
     border-top: none;
 }
 
@@ -316,35 +313,6 @@ footer {
     outline: #6BA44B solid 2px;
 }
 
-.btn {
-    font-family: 'Fuzzy Bubbles', cursive;
-    padding: 1rem;
-}
-
-.form .btn {
-    width: 40% !important;
-}
-
-.btn--white {
-    border: #6BA44B solid 1px;
-    background-color: white;
-}
-
-.btn--green {
-    background-color: #EDF6EA;
-    border: #6BA44B solid 1px;
-}
-
-.btn--green:hover, .btn--white:hover {
-    background-color: #6BA44B;
-    transform: translate(-1px, -1px);
-}
-
-.btn--green:focus, .btn--white:focus {
-    background-color: #6BA44B;
-    transform: translate(-1px, -1px);
-}
-
 #user-table {
     width: 100%;
 }
@@ -353,7 +321,7 @@ footer {
     background-color: #EDF6EA;
 }
 
-.card-login{
+.card-login {
     min-width: 0;
 }
 
@@ -427,90 +395,126 @@ footer {
     margin: 0 auto;
 }
 
-.card--big img{
+.card--big img {
     width: 100%;
 }
 
-.error{
+.error {
     color: red;
 }
 
-.ok-message{
-    color:green;
+.ok-message {
+    color: green;
 }
 
 /* Skills page */
 
-.text-box{
+.text-box {
     max-width: 700px;
     padding: 2rem;
 }
 
-.text-box--center{
+.text-box--center {
     margin: auto;
 }
 
-.text-box--split{
+.text-box--split {
     display: grid;
     grid-template-columns: auto auto;
     padding: 2rem;
     margin: 5rem 0;
 }
 
-.text--bold{
+.text--bold {
     font-weight: 700;
 }
 
-.text--grey{
-    color:#707070;
+.text--grey {
+    color: #707070;
 }
 
-.title{
+.title {
     margin: 3rem 0 1rem 0;
 }
 
 /*Language*/
-.lan-box{
+.lan-box {
     width: 100%;
     height: 20px;
 }
 
-.lan-box--green{
+.lan-box--green {
     border: 1px solid #6BA44B;
 }
 
-.lan-box--yellow{
+.lan-box--yellow {
     border: 1px solid #FFD940;
 }
 
-.lan-fill{
-    height:100%;
+.lan-fill {
+    height: 100%;
 }
 
-.lan-fill--green{
+.lan-fill--green {
     background-color: #EDF6EA;
 }
 
-.lan-fill--yellow, .text-box--yellow{
+.lan-fill--yellow, .text-box--yellow {
     background-color: #FFF8E5;
 }
 
-@media all and (max-width: 1300px){
+/* COMPONENTS */
+/*============*/
+
+.btnDiv .btn {
+    margin: 0 1rem;
+}
+
+.btn {
+    font-family: 'Fuzzy Bubbles', cursive;
+    padding: 1rem;
+}
+
+.form .btn {
+    width: 40% !important;
+}
+
+.btn--white {
+    border: #6BA44B solid 1px;
+    background-color: white;
+}
+
+.btn--green {
+    background-color: #EDF6EA;
+    border: #6BA44B solid 1px;
+}
+
+.btn--green:hover, .btn--white:hover {
+    background-color: #6BA44B;
+    transform: translate(-1px, -1px);
+}
+
+.btn--green:focus, .btn--white:focus {
+    background-color: #6BA44B;
+    transform: translate(-1px, -1px);
+}
+
+@media all and (max-width: 1300px) {
 
     /*Global Nav*/
-    .glob-nav{
+    .glob-nav {
         width: 50%;
     }
 
     /* INTRO SECTION */
-    .intro__header, .intro__desc{
+    .intro__header, .intro__desc {
         position: static;
         right: 0;
         top: 0;
         text-align: center;
     }
 
-    .img-container{
+    .img-container {
         position: relative;
         width: 100%;
         height: 100%;
@@ -518,18 +522,19 @@ footer {
         height: 500px;
     }
 
-    .intro__img{
+    .intro__img {
         top: 0;
         display: block;
         margin: auto;
     }
-    .full{
+
+    .full {
         min-height: 0;
         margin: 3rem 0;
     }
 
     /* BLOG CARDS*/
-    .card__container{
+    .card__container {
         max-width: 700px;
         grid-template-columns: none;
         grid-template-rows: auto;
@@ -537,84 +542,84 @@ footer {
     }
 
     /*PORTFOLIO */
-    .web-container{
+    .web-container {
         display: block;
         padding: 5rem;
     }
 
-    .web-content{
+    .web-content {
         width: 100%;
     }
 
-    .web-img{
+    .web-img {
         max-width: 1000px;
         margin: 3rem auto;
     }
 
 }
 
-@media all and (max-width: 706px){
+@media all and (max-width: 706px) {
 
     /*INTRO SECTION */
-    h1{
+    h1 {
         font-size: 6.0rem;
     }
-    h2, .intro__text{
+
+    h2, .intro__text {
         font-size: 3.0rem;
     }
 
     /*SKILLS PAGE*/
-    .text-box--split{
+    .text-box--split {
         display: block;
         padding: 3rem 0;
     }
 
-    .text-box{
+    .text-box {
         padding: 0;
         margin: auto 2rem;
     }
 
 
-    .glob-nav{
+    .glob-nav {
         width: 100%;
     }
 
     /* ADMIN */
-    .admin-nav li{
+    .admin-nav li {
         padding: 1rem 0;
     }
 
-    .admin-nav{
+    .admin-nav {
         width: 98%;
     }
 
-    .nav-lst a{
+    .nav-lst a {
         padding: 0;
     }
 
-    .center-box{
+    .center-box {
         width: 98%;
     }
 
     /*POST CARDS*/
-    .btnDiv button{
+    .btnDiv button {
         display: block;
         right: 0;
         margin: 1rem 0 !important;
         width: 100%;
     }
 
-    .card--small{
+    .card--small {
         width: 90%;
     }
 
     /*table */
-    th{
+    th {
         font-size: 1.8rem;
     }
-    button, input[type=submit]{
+
+    button, input[type=submit] {
         font-size: 1.6rem;
-
     }
-
 }
