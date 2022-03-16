@@ -37,7 +37,7 @@ $skills = new Skills;
     <section class="center-box" id="exp-form">
         <h2>Erfarenheter</h2>
         <form action="adminskills.php" method="POST" class="form form--green">
-            <label for="type">Typ av erfarenhet: </label><br>
+            <label for="exp-type">Typ av erfarenhet: </label><br>
             <select name="type" id="exp-type">
                 <option value="utbildning">Utbildning</option>
                 <option value="arbete">Arbete</option>

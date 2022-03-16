@@ -22,7 +22,7 @@ $lan = $skills->getLan();
 <main>
     <section class="text-box text-box--center">
         <h1 class="header-center">Om mig</h1>
-        <p class="text--grey"><?= $about["content"] ?></p>
+        <p class="text--grey about-text"><?= $about["content"] ?></p>
     </section>
     <section class="text-box--split text-box--yellow">
         <section class="text-box text-box--center">

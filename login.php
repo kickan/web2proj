@@ -1,5 +1,6 @@
 <?php
 $pagename = "Logga in";
+$bodyId = "login";
 include("includes/header.php");
 
 #Create new user obj
@@ -31,7 +32,7 @@ if (isset($_POST['logInBtn'])) {
 
 <main>
     <h1 class="header-center">Logga in</h1>
-    <section class="card">
+    <section class="card card-login">
     <form action="login.php" method="post" class="form form--green">
         <label for="username">Användarnamn: </label><br>
         <input type="text" id="username" name="username" value="<?= $f_username ?>"><br>

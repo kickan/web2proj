@@ -9,15 +9,16 @@ $user = new User;
         <?php
         if ($user->isLoggedIn()) {
             echo "<a href='logout.php' class='link'>Logga ut </a>";
-        }else{
+        } else {
             echo "</p>";
         }
         ?>
 
     </footer>
 </div>
-</body>
-<script src=" js/main.js">
+<script src="js/main.js">
 </script>
+</body>
+
 
 </html>

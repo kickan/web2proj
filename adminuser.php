@@ -30,7 +30,7 @@ if (!$user->isLoggedIn()) {
                 <input type="password" id="password1" name="password1" required><br>
                 <label for="password2">Upprepa lösenordet: </label><br>
                 <input type="password" id="password2" name="password2" required><br>
-                <input type="submit" value="Lägg till användare" id="addUserBtn" class="btn btn--green">
+                <input type="submit" value="Lägg till" id="addUserBtn" class="btn btn--green">
             </form>
         </section>
         <section>
