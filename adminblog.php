@@ -32,7 +32,7 @@ if (!$user->isLoggedIn()) {
             <input type="text" id="imgtext" name="imgtext"><br>
             <label for="content">Innehåll: </label><br>
             <textarea name="content" id="content" cols="30" rows="10" style="resize: vertical"></textarea><br>
-            <p id="message-box"></p>
+            <div id="post-message"></div>
             <input type="submit" class="btn btn--green" id="addPostBtn" value="Lägg till blogginlägg">
 
         </form>

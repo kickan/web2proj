@@ -15,7 +15,7 @@ session_start();
 
 $devmode = true; //Set devmode
 
-if($devmode){
+if ($devmode) {
     #Activate error handling
     error_reporting(-1);
     ini_set("display_errors", 1);
@@ -25,10 +25,4 @@ if($devmode){
     define("DBUSER", "web2proj");
     define("DBPASS", "password");
     define("DBDATABASE", "web2proj");
-} else{
-    #Define public DB variables
-    define("DBHOST", "studentmysql.miun.se");
-    define("DBUSER", "krab2100");
-    define("DBPASS", "PRyWGBRZXR");
-    define("DBDATABASE", "krab2100");
 }

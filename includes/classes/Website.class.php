@@ -97,7 +97,7 @@ class Website
      */
     public function getAllWebsites() : array {
         #Create question to db
-        $sql = "SELECT * FROM website;";
+        $sql = "SELECT * FROM website ORDER BY created DESC;";
 
         #Send question to db
         $result = $this->db->query($sql);

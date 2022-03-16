@@ -35,7 +35,7 @@ if (!$user->isLoggedIn()) {
             <label for="content">Beskrivning: </label><br>
             <textarea name="content" id="content" cols="30" rows="10" style="resize: vertical"></textarea><br>
             <input type="submit" id="webBtn" value="Lägg till webbsida" class="btn btn--green">
-            <div id="message-box"></div>
+            <div id="web-message"></div>
         </form>
     </section>
     <section>

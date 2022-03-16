@@ -22,7 +22,7 @@ if (!$user->isLoggedIn()) {
         <section>
             <h2>Skapa ny användare</h2>
             <form class="form form--green">
-                <div id="message-box">
+                <div id="user-message">
 
                 </div>
                 <label for="name">Namn: </label><br>
