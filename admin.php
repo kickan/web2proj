@@ -37,7 +37,7 @@ if (!$user->isLoggedIn()) {
     </section>
     <section>
         <h2 class="center-heading">Publicerade webbplatser</h2>
-        <section id="web-container">
+        <section id="web-container"> <!--websites are printed with JS and DOM-manipulation-->
         </section>
     </section>
 </main>

@@ -18,7 +18,7 @@ include("includes/header.php");
         </div>
     </section>
     <section class="card__container" id="post-container">
-        <!--blog posts -->
+        <!--Posts are printed with JS and DOM-manipulation-->
     </section>
 </main>
 <?php

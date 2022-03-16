@@ -1,6 +1,7 @@
 <?php
 include_once("includes/config.php");
 
+#Create new user obj
 $user = new User;
 
 
@@ -30,6 +31,7 @@ $user = new User;
                     <li><a href="skills.php">Skills</a></li>
                     <li><a href="blog.php">Blogg</a></li>
                     <?php
+                    #If logged in, show admin page
                     if ($user->isLoggedIn()) {
                     ?>
                         <li><a href="admin.php" >Admin</a></li>

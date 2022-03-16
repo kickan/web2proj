@@ -44,6 +44,7 @@ if (isset($_POST["editWebBtn"])) {
     $f_content = $content;
     $f_link = $link;
 
+    #Check if all fields are filled in
     if ($title != "" && $content != "" && $link != "") {
         if ($web->updateWebsite($id, $title, $content, $link)) {
             $message = "Webbsidan har uppdaterats";
@@ -77,7 +78,6 @@ if (isset($_POST["editWebBtn"])) {
             <textarea name="content" id="content" cols="30" rows="10" style="resize: vertical"><?= $f_content?></textarea><br>
             <p id="message-box"><?= $message ?></p>
             <input type="submit" class="btn btn--green" name="editWebBtn" value="Spara ändringar">
-
         </form>
     </section>
 </main>

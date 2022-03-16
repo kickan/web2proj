@@ -76,12 +76,12 @@ $skills = new Skills;
     </section>
     <section>
         <h2 class="center-heading">Sparade erfarenheter</h2>
-        <section id="exp-container">
+        <section id="exp-container"><!--Experiences are printed with JS and DOM-manipulation-->
         </section>
     </section>
     <section>
         <h2 class="center-heading">Sparade Språk</h2>
-        <section id="lan-container">
+        <section id="lan-container"><!--Languages are printed with JS and DOM-manipulation-->
         </section>
     </section>
 </main>

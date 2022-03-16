@@ -17,9 +17,15 @@ if($devmode){
     error_reporting(-1);
     ini_set("display_errors", 1);
 
-    #Define DB variables
+    #Define local DB variables
     define("DBHOST", "localhost");
     define("DBUSER", "web2proj");
     define("DBPASS", "password");
     define("DBDATABASE", "web2proj");
+} else{
+    #Define public DB variables
+    define("DBHOST", "studentmysql.miun.se");
+    define("DBUSER", "krab2100");
+    define("DBPASS", "PRyWGBRZXR");
+    define("DBDATABASE", "krab2100");
 }

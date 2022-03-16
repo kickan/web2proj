@@ -27,7 +27,6 @@ $webLst = $web->getAllWebsites();
             ?>
                 <img src="img/<?= $w["img"] ?>" class="web-img" alt=""> <?php
                                                                     } ?>
-
         </section><?php
                 }
                     ?>

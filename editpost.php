@@ -70,9 +70,9 @@ if (isset($_POST["editPostBtn"])) {
             <textarea name="content" id="content" cols="30" rows="10" style="resize: vertical"><?= $f_content ?></textarea><br>
             <p id="message-box"><?= $message ?></p>
             <input type="submit" class="btn btn--green" name="editPostBtn" value="Spara ändringar">
-
         </form>
     </section>
+    
 </main>
 <?php
 include("includes/footer.php");

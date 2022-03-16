@@ -1,4 +1,5 @@
 <?php
+#List pages
 $pages = array(
     "Portfolio" => "admin.php",
     "Skills" => "adminskills.php",
@@ -9,6 +10,7 @@ $pages = array(
 <nav>
     <ul class="admin-nav nav-lst">
         <?php
+        #print pages
         $current = basename($_SERVER["SCRIPT_FILENAME"]);
         foreach ($pages as $page => $pageFileName) {
             if ($current == $pageFileName) {

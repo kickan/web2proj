@@ -1,5 +1,62 @@
-let admin = false;
+/*
+*TABLE OF CONTENTS*
 
+DEFAULT FUNCTIONS
+- init
+- runFunctions
+
+ABOUT ME
+ - getAbout
+ - printAboutMe
+ - updateAboutMe
+
+ EXPERIENCE
+ - createExp
+ - getExp
+ - printExp
+ - deleteExp
+ - getSingleExp
+ - printExpForm
+ - updateExp
+
+ LANGUAGE
+ - createLan
+ - getLan
+ - printLan
+ - deleteLan
+ - getSingleLan
+ - printLanForm
+ - UpdateLan
+
+ POST
+ - getPosts
+ - printPosts
+ - deletePost
+ - addPost
+
+ USER
+ - addUser
+ - getUsers
+
+ WEBSITE
+ - addWebsite
+ - getAllWebsites
+ - printWebs
+ - deleteWeb
+
+ OTHER
+ - fixDate
+ - CheckAndPrintResponse
+
+ GRAPHICAL DESIGN
+ - imgFunc
+ - expandCard
+*/
+
+//========== DEFAULT FUNCTIONS ==========//
+
+//Set default admin value
+let admin = false;
 
 //Function to run when page is loaded
 function init() {
@@ -54,34 +111,8 @@ function runFunctions() {
     }
 }
 
-//Img animation index page
-function imgFunc() {
-    let img1 = document.getElementById("img1");
-    let img2 = document.getElementById("img2");
-    let img3 = document.getElementById("img3");
+//======== ABOUT ME functions ============//
 
-    document.addEventListener("scroll", function () {
-        let value = window.scrollY;
-        if (value < 76) {
-            img1.style.opacity = "1";
-            img2.style.opacity = "0";
-            img3.style.opacity = "0";
-
-        }
-        else if (value < 176 && value > 76) {
-            img1.style.opacity = "0";
-            img2.style.opacity = "1";
-            img3.style.opacity = "0";
-        }
-        else {
-            img1.style.opacity = "0";
-            img2.style.opacity = "0";
-            img3.style.opacity = "1";
-        }
-    })
-}
-
-//---------------ADMINSKILLS-----------//
 //Fetch about me information from API
 function getAbout() {
     fetch("API/about.php")
@@ -89,11 +120,13 @@ function getAbout() {
         .then(data => printAboutMe(data));
 }
 
-//Print about me information on adminskills page
+//Print about me information
 function printAboutMe(data) {
+    //Get element referenses
     let sloganEl = document.getElementById("slogan");
     let contentEl = document.getElementById("about-content");
 
+    //Set values of elements
     sloganEl.value = data[0].slogan;
     contentEl.innerHTML = data[0].content;
 }
@@ -101,6 +134,7 @@ function printAboutMe(data) {
 //Update about me information
 function updateAboutMe(event) {
     event.preventDefault();
+
     let formData = new FormData();
 
     //Get form elements
@@ -118,8 +152,9 @@ function updateAboutMe(event) {
     })
         .then(response => response.json())
         .then(data => checkAndPrintResponse(data, "about-message", []));
-
 }
+
+//============ EXPERIENCE FUNCTIONS =============//
 
 //Create new experience via API
 function createExp() {
@@ -133,7 +168,6 @@ function createExp() {
     let sDate = document.getElementById("startdate");
     let eDate = document.getElementById("enddate");
     let content = document.getElementById("exp-content");
-    console.log(title);
 
     //Append form values
     formData.append("type", type.value);
@@ -151,10 +185,11 @@ function createExp() {
         .then(response => response.json())
         .then(data => checkAndPrintResponse(data, "exp-message", ["title", "location", "startdate", "enddate", "exp-content"]));
 
+    //Get and print experiences
     getExp();
 }
 
-//Fetch experiences from exp API
+//Fetch experiences from API
 function getExp() {
     fetch("API/exp.php")
         .then(response => response.json())
@@ -167,6 +202,8 @@ function printExp(exp) {
 
     //Remove children
     containerEl.innerHTML = "";
+
+    //Loop throgh array and create elems for each exp
     exp.forEach(e => {
         let article = document.createElement("article");
         article.classList.add("card--small");
@@ -180,11 +217,11 @@ function printExp(exp) {
         div.classList.add("card--heading");
         div.appendChild(title);
 
+        //create edit and delete btn if on Admin page
         if (admin) {
             let btnDiv = document.createElement("div");
             btnDiv.classList.add("btnDiv");
 
-            //create edit and delete btn
             let delBtn = document.createElement("button");
             delBtn.classList.add("btn");
             delBtn.classList.add("btn--green");
@@ -213,6 +250,7 @@ function printExp(exp) {
         let text = document.createTextNode(e.content);
         p.appendChild(text);
 
+        //append elements
         article.appendChild(div);
         article.appendChild(loc);
         article.appendChild(p);
@@ -221,6 +259,7 @@ function printExp(exp) {
     })
 }
 
+//Delete experience via API
 function deleteExp() {
     event.preventDefault();
     let id = this.id;
@@ -231,20 +270,28 @@ function deleteExp() {
     getExp();
 }
 
+//Get single experience through API
 function getSingleExp() {
     let form = document.getElementById("exp-form");
+
+    //Scroll to form 
     form.scrollIntoView();
+
     event.preventDefault();
+    //Get ID from element
     let id = this.id;
     id = id[1];
-    console.log(id);
+
+    //send id to API with GET and recive data for single post
     let url = "API/exp.php?getSingle=" + id;
     fetch(url)
         .then(response => response.json())
         .then(data => printExpForm(data))
 }
 
+//Print experience data into experience form
 function printExpForm(exp) {
+    //Get element references
     let type = document.getElementById("exp-type");
     let title = document.getElementById("title");
     let loc = document.getElementById("location");
@@ -252,6 +299,7 @@ function printExpForm(exp) {
     let eDate = document.getElementById("enddate");
     let content = document.getElementById("exp-content");
 
+    //Set values
     type.value = exp[0].type;
     title.value = exp[0].title;
     loc.value = exp[0].location;
@@ -259,7 +307,7 @@ function printExpForm(exp) {
     eDate.value = exp[0].endDate;
     content.value = exp[0].content;
 
-    //Fix buttons
+    //Add "save changes"-btn
     let btn = document.createElement("button");
     btn.classList.add("btn");
     btn.classList.add("btn--green");
@@ -268,14 +316,18 @@ function printExpForm(exp) {
     btn.addEventListener("click", updateExp);
     content.parentNode.appendChild(btn);
 
-    //hide save btn
+    //hide save-btn
     let saveBtn = document.getElementById("exp-Btn");
     saveBtn.style.display = "none";
 }
 
+//Update Experience with data from form via API
 function updateExp() {
     event.preventDefault();
+    //Get experience ID from element
     let id = this.id;
+
+    //Create new form data
     let formData = new FormData();
 
     //Get form elements
@@ -311,9 +363,13 @@ function updateExp() {
     let saveBtn = document.getElementById("exp-Btn");
     saveBtn.style.display = "block";
 
+    //Get and print experiences
     getExp();
 }
 
+//============ LANGUAGE FUNCTIONS ============//
+
+//Create new language via API
 function createLan() {
     event.preventDefault();
     let formData = new FormData();
@@ -337,15 +393,18 @@ function createLan() {
         .then(response => response.json())
         .then(data => checkAndPrintResponse(data, "lan-message", ["name", "level"]));
 
+    //Get and print languages
     getLan();
 }
 
+//Get languages from API
 function getLan() {
     fetch("API/lan.php")
         .then(response => response.json())
         .then(data => printLan(data));
 }
 
+//Print languages to page
 function printLan(lan) {
     //Print experiences
     let containerEl = document.getElementById("lan-container");
@@ -353,6 +412,7 @@ function printLan(lan) {
     //Remove children
     containerEl.innerHTML = "";
 
+    //Loop through list of languages and create elements
     lan.forEach(l => {
         let article = document.createElement("article");
         article.classList.add("card--small");
@@ -365,11 +425,11 @@ function printLan(lan) {
         div.classList.add("card--heading");
         div.appendChild(title);
 
+        //create edit and delete btns if on admin page
         if (admin) {
             let btnDiv = document.createElement("div");
             btnDiv.classList.add("btnDiv");
 
-            //create edit and delete btn
             let delBtn = document.createElement("button");
             delBtn.classList.add("btn");
             delBtn.classList.add("btn--green");
@@ -384,46 +444,54 @@ function printLan(lan) {
             editBtn.addEventListener("click", getSingleLan)
             editBtn.innerHTML = "Redigera";
 
+            //Append elements
             btnDiv.appendChild(editBtn);
             btnDiv.appendChild(delBtn);
-
             div.appendChild(btnDiv);
         }
+        //Append elements
         article.appendChild(div);
-
         containerEl.append(article);
     })
 }
 
+//Delete single Language via API
 function deleteLan() {
     event.preventDefault();
+    //Get lan ID from this element
     let id = this.id;
     let url = "API/lan.php?delete=" + id;
     fetch(url)
         .then(response => response.json())
         .then(data => console.log(data))
+    //Get and print languages
     getLan();
 }
 
+//Get data for single language via API
 function getSingleLan() {
     let form = document.getElementById("lan-form");
+
+    //Scroll to form
     form.scrollIntoView();
     event.preventDefault();
+    //Get id from element
     let id = this.id;
     id = id[1];
-    console.log(id);
     let url = "API/lan.php?getSingle=" + id;
     fetch(url)
         .then(response => response.json())
         .then(data => printLanForm(data))
 }
 
+//Print language data into form
 function printLanForm(lan) {
+    //Get element references
     let type = document.getElementById("lan-type");
     let name = document.getElementById("name");
     let level = document.getElementById("level");
 
-
+    //Set values
     type.value = lan[0].type;
     name.value = lan[0].name;
     level.value = lan[0].level;
@@ -441,8 +509,11 @@ function printLanForm(lan) {
     let saveBtn = document.getElementById("lan-Btn");
     saveBtn.style.display = "none";
 }
+
+//Updata single language via API
 function updateLan() {
     event.preventDefault();
+    //Get ID from element
     let id = this.id;
     let formData = new FormData();
 
@@ -450,7 +521,6 @@ function updateLan() {
     let type = document.getElementById("lan-type");
     let name = document.getElementById("name");
     let level = document.getElementById("level");
-
 
     //Append form values
     formData.append("update", id);
@@ -473,11 +543,11 @@ function updateLan() {
     let saveBtn = document.getElementById("lan-Btn");
     saveBtn.style.display = "block";
 
+    //Get and print languages
     getLan();
 }
 
-
-//-----------------------------------------//
+//===========POST FUNCTIONS ==============//
 
 //Fetch latest posts from post API
 function getPosts(number, type) {
@@ -494,6 +564,7 @@ function printPosts(posts, type) {
 
     contEl.innerHTML = ""; //Empty element
 
+    //Check for type of card to be created
     if (type == "big") {
         posts.forEach(post => {
             //Create elements and add data from post
@@ -606,7 +677,6 @@ function printPosts(posts, type) {
             contEl.appendChild(cont);
         })
     }
-
 }
 
 //Delete post from DB via API
@@ -617,6 +687,7 @@ function deletePost() {
     fetch(url)
         .then(response => response.json())
         .then(data => console.log(data))
+    //Get and print posts
     getPosts(0, "small")
 }
 
@@ -649,6 +720,8 @@ function addPost(event) {
     getPosts(0, "small");
 }
 
+//===========USER FUNCTIONS ============//
+
 //Add user from form to db using API
 function addUser(event) {
     event.preventDefault(); //Prevent page from loading
@@ -678,6 +751,7 @@ function addUser(event) {
     pass1Input.value = "";
     pass2Input.value = "";
 
+    //Get and print users
     getUsers();
 }
 
@@ -696,7 +770,6 @@ function printUsers(users) {
     while (tableEl.childNodes.length > 2) {
         tableEl.removeChild(tableEl.lastChild);
     }
-
     //List users
     users.forEach(user => {
         let td1 = document.createElement("td");
@@ -711,7 +784,6 @@ function printUsers(users) {
 
         let trEl = document.createElement("tr");
 
-
         //Append elements
         trEl.appendChild(td1);
         trEl.appendChild(td2);
@@ -721,51 +793,9 @@ function printUsers(users) {
     })
 }
 
-//Fix database date to another format
-function fixDate(stringDate) {
-    const d = new Date(stringDate);
-    let returnDate = d.getDate() + "/" + d.getMonth() + "-" + d.getFullYear() + " kl. " + d.getHours() + ":" + d.getMinutes();
+//=========== WEBSITE FUNCTIONS ============//
 
-    return returnDate;
-}
-
-
-function checkAndPrintResponse(data, messEl, lst) {
-    //Get reference to messagebox
-    let box = document.getElementById(messEl);
-
-    //Empty box content
-    box.innerHTML = "";
-
-    let errorno = parseInt(data.error);
-
-    //Check response
-    if (errorno == 0) {
-        //Print message
-        let p = document.createElement("p");
-        p.classList.add("ok-message");
-        p.innerHTML = data.message;
-        box.appendChild(p);
-        //If user added, empty form
-        for (let i = 0; i < lst.length; i++) {
-            const inputField = document.getElementById(lst[i]);
-            inputField.value = "";
-        }
-
-    } else {
-        //Split messages into list if several error messages
-        let m = data.message;
-        let messages = m.split(". ");
-        for (let i = 0; i < errorno; i++) {
-            //Print error messages
-            let p = document.createElement("p");
-            p.classList.add("error");
-            p.innerHTML = messages[i];
-            box.appendChild(p);
-        }
-    }
-}
-
+//Add new website through API
 function addWebsite(event) {
     event.preventDefault(); //Prevent page from loading
     let formData = new FormData();
@@ -790,6 +820,7 @@ function addWebsite(event) {
         .then(response => response.json())
         .then(data => checkAndPrintResponse(data, "web-message", ["title", "file", "content", "link"]));
 
+    //Get and print websites
     getAllWebsites();
 }
 
@@ -868,9 +899,93 @@ function printWebs(webs) {
         //Append article to container
         contEl.appendChild(cont);
     })
-
 }
 
+function deleteWeb() {
+    event.preventDefault();
+    let id = this.id;
+    let url = "API/web.php?delete=" + id;
+    fetch(url)
+        .then(response => response.json())
+        .then(data => console.log(data))
+    getAllWebsites();
+}
+
+//========= OTHER FUNCTIONS =========//
+
+//Fix database date to another format
+function fixDate(stringDate) {
+    const d = new Date(stringDate);
+    let returnDate = d.getDate() + "/" + d.getMonth() + "-" + d.getFullYear() + " kl. " + d.getHours() + ":" + d.getMinutes();
+
+    return returnDate;
+}
+
+//Check and print response from API into message element (messEl).
+//Empty elements in lst if ok response
+function checkAndPrintResponse(data, messEl, lst) {
+    //Get reference to messagebox
+    let box = document.getElementById(messEl);
+
+    //Empty box content
+    box.innerHTML = "";
+
+    let errorno = parseInt(data.error);
+
+    //Check response
+    if (errorno == 0) {
+        //Print message
+        let p = document.createElement("p");
+        p.classList.add("ok-message");
+        p.innerHTML = data.message;
+        box.appendChild(p);
+        //If user added, empty form
+        for (let i = 0; i < lst.length; i++) {
+            const inputField = document.getElementById(lst[i]);
+            inputField.value = "";
+        }
+    } else {
+        //Split messages into list if several error messages
+        let m = data.message;
+        let messages = m.split(". ");
+        for (let i = 0; i < errorno; i++) {
+            //Print error messages
+            let p = document.createElement("p");
+            p.classList.add("error");
+            p.innerHTML = messages[i];
+            box.appendChild(p);
+        }
+    }
+}
+
+//================== Graphical design ===================//
+
+//Img animation index page
+function imgFunc() {
+    let img1 = document.getElementById("img1");
+    let img2 = document.getElementById("img2");
+    let img3 = document.getElementById("img3");
+
+    document.addEventListener("scroll", function () {
+        let value = window.scrollY;
+        if (value < 76) {
+            img1.style.opacity = "1";
+            img2.style.opacity = "0";
+            img3.style.opacity = "0";
+
+        }
+        else if (value < 176 && value > 76) {
+            img1.style.opacity = "0";
+            img2.style.opacity = "1";
+            img3.style.opacity = "0";
+        }
+        else {
+            img1.style.opacity = "0";
+            img2.style.opacity = "0";
+            img3.style.opacity = "1";
+        }
+    })
+}
 
 //Expand blogposts card on click
 function expandCard() {
@@ -884,14 +999,4 @@ function expandCard() {
             elements[i].style.display = "none";
         }
     }
-}
-
-function deleteWeb() {
-    event.preventDefault();
-    let id = this.id;
-    let url = "API/web.php?delete=" + id;
-    fetch(url)
-        .then(response => response.json())
-        .then(data => console.log(data))
-    getAllWebsites();
 }

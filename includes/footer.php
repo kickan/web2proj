@@ -7,6 +7,7 @@ $user = new User;
         <p></p>
         <p>Kristina Abrahamsson</p>
         <?php
+        #Show log out btn if logged in
         if ($user->isLoggedIn()) {
             echo "<a href='logout.php' class='link'>Logga ut </a>";
         } else {

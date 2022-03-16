@@ -40,7 +40,7 @@ if (!$user->isLoggedIn()) {
                     <th>Namn</th>
                     <th>Användarnamn</th>
                     <th>Skapad</th>
-                </tr>
+                </tr><!--Users are printed with JS and DOM-manipulation-->
             </table>
         </section>
 

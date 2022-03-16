@@ -37,7 +37,7 @@ if (!$user->isLoggedIn()) {
 
     <section>
         <h2 class="center-heading">Alla publicerade blogginlägg</h2>
-        <div id="post-container">
+        <div id="post-container"> <!--Posts are printed with JS and DOM-manipulation-->
 
         </div>
     </section>
